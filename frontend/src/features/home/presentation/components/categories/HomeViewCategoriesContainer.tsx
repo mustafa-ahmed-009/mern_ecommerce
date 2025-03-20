@@ -13,7 +13,7 @@ const HomeViewCategoriesContainer = () => {
     (state: RootState) => state.categories
   );
   useEffect(() => {
-    dispatch(CategoriesService.fetchAllCategories());
+    dispatch(CategoriesService.fetchAllCategories({}));
   }, []);
   if (state.loading) { 
     return <LoadingSpinner/>

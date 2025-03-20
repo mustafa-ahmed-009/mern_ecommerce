@@ -27,8 +27,8 @@ router
   .post(
     uploadCategoryImage,
     resizeImage,
-    authenticate,
-    allowedTo("admin","manager"),
+    // authenticate,
+    // allowedTo("admin","manager"),
     createCategoryValidator,
     createCategory
   );

@@ -47,7 +47,20 @@ export const categoriesSlice = createSlice({
           state.loading = false;
           state.error = action.payload as string;
         }
-      );
+    ) .addCase(CategoriesService.createCategory.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(CategoriesService.createCategory.fulfilled, (state, action) => {
+      state.loading = false;
+      state.categoriesList.push(action.payload); // Add the new category to the list
+    })
+    .addCase(CategoriesService.createCategory.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+    
+    
   },
 });
 export const categoriesReducer = categoriesSlice.reducer;

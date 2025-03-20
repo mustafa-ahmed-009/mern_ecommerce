@@ -11,6 +11,7 @@ import ProductPage from "./features/products/presentation/ProductsPage"
 import ProductDetails from "./features/products/presentation/ProductDetailsPage"
 import PaymentMethodPage from "./features/cart/presentation/PaymentMethodPage"
 import AdminDashboard from "./features/admin/presentation/AdminDashboard"
+import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
 
@@ -30,8 +31,8 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/cart/paymentmethod" element={<PaymentMethodPage />} />
 
-      </Routes>
-      <Footer />
+        </Routes>
+        <Toaster/>
     </BrowserRouter>
       
     </>
