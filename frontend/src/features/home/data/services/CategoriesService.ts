@@ -3,10 +3,18 @@ import { axiosInstance } from "../../../../utils/axios";
 
 export const CategoriesService = {
     fetchAllCategories: createAsyncThunk(
-        "categories/fetchAll", async (_,{rejectWithValue}) => {
+        "categories/fetchAll", async (params:{page?:number ,limit?:number},{rejectWithValue}) => {
             try {
-                const response = await axiosInstance.get("categories");
-               return response.data.data; 
+                const { page,limit} = params; 
+                const response = await axiosInstance.get("categories", {
+                    params: {
+                        limit , 
+                        page
+                    }
+                });
+                console.log(response.data);
+                
+               return response.data; 
                 
             } catch (error: any) {
                 return rejectWithValue(error.message);

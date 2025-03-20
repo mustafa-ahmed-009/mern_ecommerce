@@ -1,3 +1,4 @@
+import { PaginationData } from './../../data/models/PaginationModel';
 import { createSlice } from "@reduxjs/toolkit";
 import { Category } from "../../data/models/CategoryModel";
 import { CategoriesService } from "../../data/services/CategoriesService";
@@ -6,12 +7,21 @@ interface CategoriesState {
   categoriesList: Category[];
   loading: boolean;
   error: string | null;
+  paginationData: PaginationData
 }
+
+
 const initialState: CategoriesState = {
   pageCount: 0,
   categoriesList: [],
   error: null,
   loading: false,
+  paginationData: {
+    currentPage: 0, // Default value
+    limit: 10, // Default value
+    numberOfPages: 0, // Default value
+    next: 0, // Default value
+  },
 };
 export const categoriesSlice = createSlice({
   name: "categories",
@@ -23,7 +33,8 @@ export const categoriesSlice = createSlice({
         CategoriesService.fetchAllCategories.fulfilled,
         (state, action) => {
           state.loading = false;
-          state.categoriesList = action.payload;
+          state.paginationData = action.payload.paginationResult
+          state.categoriesList = action.payload.data;
         }
       )
       .addCase(CategoriesService.fetchAllCategories.pending, (state) => {

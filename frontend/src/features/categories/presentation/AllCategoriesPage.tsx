@@ -1,59 +1,52 @@
 import React, { useEffect } from "react";
-import CategoryItem from "../../home/presentation/components/categories/HomeViewCategoriesContainerItem";
-import CategiesPageitems from "./components/CategiesPageitems";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, AppStore, RootState } from "../../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 import { CategoriesService } from "../../home/data/services/CategoriesService";
 import LoadingSpinner from "../../../utils/components/LoadingSpinner";
 import ErrorMessage from "../../../utils/components/ErroMessage";
+import CustomReactPaginate from "../../../utils/components/CustomReactPaginate";
+import CategiesPageitems from "./components/CategiesPageitems";
 
 const CategoriesPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { categoriesList, loading, error } = useSelector(
+  const { categoriesList, loading, error, paginationData } = useSelector(
     (state: RootState) => state.categories
   );
-
+  const categoryPageLimit = 5; 
   useEffect(() => {
-    dispatch(CategoriesService.fetchAllCategories());
+    dispatch(
+      CategoriesService.fetchAllCategories({
+        page: 1, // Fetch the first page initially
+        limit: categoryPageLimit,
+      })
+    );
   }, [dispatch]);
 
   if (loading) {
-    return <LoadingSpinner />; // Display a loading spinner while data is being fetched
+    return <LoadingSpinner />;
   }
 
   if (error) {
-    return <ErrorMessage message={error} />; // Display an error message if there's an error
+    return <ErrorMessage message={error} />;
   }
+
+  const handlePageChange = (selectedItem: { selected: number }) => {
+    dispatch(
+      CategoriesService.fetchAllCategories({
+        page: selectedItem.selected + 1, // Convert to one-based index
+        limit: categoryPageLimit,
+      })
+    );
+  };
 
   return (
     <div className="flex flex-col justify-between items-center gap-4">
       <CategiesPageitems categories={categoriesList} />
-      <div className="join">
-        <input
-          className="join-item btn btn-square"
-          type="radio"
-          name="options"
-          aria-label="1"
-        />
-        <input
-          className="join-item btn btn-square"
-          type="radio"
-          name="options"
-          aria-label="2"
-        />
-        <input
-          className="join-item btn btn-square"
-          type="radio"
-          name="options"
-          aria-label="3"
-        />
-        <input
-          className="join-item btn btn-square"
-          type="radio"
-          name="options"
-          aria-label="4"
-        />
-      </div>
+      <CustomReactPaginate
+        pageCount={paginationData.numberOfPages}
+        handlePageClick={handlePageChange}
+        currentPage={paginationData.currentPage}
+      />
     </div>
   );
 };
