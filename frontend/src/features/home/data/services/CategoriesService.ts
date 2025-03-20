@@ -42,5 +42,39 @@ export const CategoriesService = {
         return rejectWithValue(error.message);
       }
     }
-  ),
+    ),
+  
+    deleteCategory: createAsyncThunk(
+        "categories/delete",
+        async (id: string, { rejectWithValue }) => {
+          try {
+            await axiosInstance.delete(`categories/${id}`);
+            return id; // Return the deleted category ID
+          } catch (error: any) {
+            if (error.response && error.response.data) {
+              return rejectWithValue(error.response.data.message || error.response.data);
+            }
+            return rejectWithValue(error.message);
+          }
+        }
+      ),
+      
+      updateCategory: createAsyncThunk(
+        "categories/update",
+        async ({ id, formData }: { id: string; formData: FormData }, { rejectWithValue }) => {
+          try {
+            const response = await axiosInstance.put(`categories/${id}`, formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            });
+            return response.data; // Return the updated category
+          } catch (error: any) {
+            if (error.response && error.response.data) {
+              return rejectWithValue(error.response.data.message || error.response.data);
+            }
+            return rejectWithValue(error.message);
+          }
+        }
+      ),
 };

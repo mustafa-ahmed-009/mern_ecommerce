@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ProductsManagemnt from "./pages/ProductsManagemnt";
 import OrdersManagement from "./pages/OrdersManagement";
 import AddingBarnds from "./pages/AddingBarnds";
-import AddingCategory from "./pages/AddingCategory";
+import AddingCategory from "./pages/CategoriesManagement";
 import AddingSubCategroy from "./pages/AddingSubCategroy";
 import AddingProduct from "./pages/AddingProduct";
 import AdminSidebar from "./components/AdminSideBar";

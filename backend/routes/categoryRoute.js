@@ -20,15 +20,15 @@ const subcategoriesRoute = require("./subCategoryRoute");
 const router = express.Router();
 
 router.use("/:categoryId/subcategories", subcategoriesRoute);
-
+// router.use(    authenticate,
+//   allowedTo("admin","manager"),)
 router
   .route("/")
   .get(getCategories)
   .post(
     uploadCategoryImage,
     resizeImage,
-    // authenticate,
-    // allowedTo("admin","manager"),
+
     createCategoryValidator,
     createCategory
   );
@@ -38,12 +38,10 @@ router
   .put(
     uploadCategoryImage,
     resizeImage,
-    authenticate,
-    allowedTo("admin","manager"),
+
     updateCategoryValidator,
     updateCategory
   )
-  .delete(    authenticate,
-    allowedTo("admin"),deleteCategoryValidator, deleteCategory);
+  .delete(deleteCategoryValidator, deleteCategory);
 
 module.exports = router;
