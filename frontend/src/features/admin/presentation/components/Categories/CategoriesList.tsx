@@ -1,43 +1,19 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../../../redux/store";
-import { CategoriesService } from "../../../data/services/CategoriesService";
-import toast from "react-hot-toast";
 import LoadingSpinner from "../../../../../utils/components/LoadingSpinner";
 import EditCategory from "./EditCategory"; // Import the EditCategory component
-import { Category } from "../../../../home/data/models/CategoryModel";
 import ConfirmationDialog from "../../../../../utils/components/ConfirmationDialog";
+import useCategories from "../../hooks/categoriesLIstHook";
 
 const CategoriesList = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { categoriesList, loading, error } = useSelector(
-    (state: RootState) => state.categories
-  );
-
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  const [deletingCategoryId, setDeletingCategoryId] = useState<string | null>(
-    null
-  ); // Track the category to delete
-
-  useEffect(() => {
-    dispatch(CategoriesService.fetchAllCategories({}))
-      .unwrap()
-      .catch((error) => {
-        toast.error(error);
-      });
-  }, [dispatch]);
-
-  const handleDelete = async (id: string) => {
-    try {
-      await dispatch(CategoriesService.deleteCategory(id)).unwrap();
-      toast.success("تم حذف التصنيف بنجاح");
-      dispatch(CategoriesService.fetchAllCategories({})); // Refresh the list
-    } catch (error) {
-      toast.error("فشل في حذف التصنيف");
-    } finally {
-      setDeletingCategoryId(null); // Close the confirmation dialog
-    }
-  };
+  const {
+    categoriesList,
+    loading,
+    error,
+    editingCategory,
+    deletingCategoryId,
+    setEditingCategory,
+    setDeletingCategoryId,
+    handleDelete,
+  } = useCategories();
 
   if (loading) {
     return <LoadingSpinner />;
