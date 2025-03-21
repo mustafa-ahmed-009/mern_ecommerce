@@ -1,15 +1,14 @@
-import { PaginationData } from './../../data/models/PaginationModel';
+import { PaginationData } from "./../../data/models/PaginationModel";
 import { createSlice } from "@reduxjs/toolkit";
 import { Category } from "../../data/models/CategoryModel";
-import { CategoriesService } from "../../data/services/CategoriesService";
+import { CategoriesService } from "../../../admin/data/services/CategoriesService";
 interface CategoriesState {
   pageCount: number;
   categoriesList: Category[];
   loading: boolean;
   error: string | null;
-  paginationData: PaginationData
+  paginationData: PaginationData;
 }
-
 
 const initialState: CategoriesState = {
   pageCount: 0,
@@ -33,7 +32,7 @@ export const categoriesSlice = createSlice({
         CategoriesService.fetchAllCategories.fulfilled,
         (state, action) => {
           state.loading = false;
-          state.paginationData = action.payload.paginationResult
+          state.paginationData = action.payload.paginationResult;
           state.categoriesList = action.payload.data;
         }
       )
@@ -47,20 +46,19 @@ export const categoriesSlice = createSlice({
           state.loading = false;
           state.error = action.payload as string;
         }
-    ) .addCase(CategoriesService.createCategory.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    })
-    .addCase(CategoriesService.createCategory.fulfilled, (state, action) => {
-      state.loading = false;
-      state.categoriesList.push(action.payload); // Add the new category to the list
-    })
-    .addCase(CategoriesService.createCategory.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as string;
-    });
-    
-    
+      )
+      .addCase(CategoriesService.createCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(CategoriesService.createCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.categoriesList.push(action.payload); // Add the new category to the list
+      })
+      .addCase(CategoriesService.createCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 export const categoriesReducer = categoriesSlice.reducer;

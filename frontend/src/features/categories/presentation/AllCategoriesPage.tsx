@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
-import { CategoriesService } from "../../home/data/services/CategoriesService";
+import { CategoriesService } from "../../admin/data/services/CategoriesService";
 import LoadingSpinner from "../../../utils/components/LoadingSpinner";
 import ErrorMessage from "../../../utils/components/ErroMessage";
 import CustomReactPaginate from "../../../utils/components/CustomReactPaginate";
@@ -12,7 +12,7 @@ const CategoriesPage = () => {
   const { categoriesList, loading, error, paginationData } = useSelector(
     (state: RootState) => state.categories
   );
-  const categoryPageLimit = 5; 
+  const categoryPageLimit = 5;
   useEffect(() => {
     dispatch(
       CategoriesService.fetchAllCategories({

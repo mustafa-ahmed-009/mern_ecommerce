@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../redux/store";
-import { CategoriesService } from "../../../../home/data/services/CategoriesService";
+import { CategoriesService } from "../../../data/services/CategoriesService";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../../../../../utils/components/LoadingSpinner";
 import EditCategory from "./EditCategory"; // Import the EditCategory component
@@ -15,7 +15,9 @@ const CategoriesList = () => {
   );
 
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  const [deletingCategoryId, setDeletingCategoryId] = useState<string | null>(null); // Track the category to delete
+  const [deletingCategoryId, setDeletingCategoryId] = useState<string | null>(
+    null
+  ); // Track the category to delete
 
   useEffect(() => {
     dispatch(CategoriesService.fetchAllCategories({}))

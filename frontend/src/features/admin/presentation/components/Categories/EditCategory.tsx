@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../redux/store";
 import LoadingSpinner from "../../../../../utils/components/LoadingSpinner";
-import { CategoriesService } from "../../../../home/data/services/CategoriesService";
+import { CategoriesService } from "../../../data/services/CategoriesService";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FiUpload } from "react-icons/fi";
@@ -46,15 +46,12 @@ const EditCategory: React.FC<EditCategoryProps> = ({ category, onClose }) => {
       formData.append("image", image); // Append the new image if it exists
     }
 
-    dispatch(
-      CategoriesService.updateCategory({ id: category._id, formData })
-    )
+    dispatch(CategoriesService.updateCategory({ id: category._id, formData }))
       .unwrap()
-        .then(() => {
-          
+      .then(() => {
         toast.success("تم تعديل التصنيف بنجاح");
-            onClose();
-            dispatch(CategoriesService.fetchAllCategories({}));// Close the dialog after successful update
+        onClose();
+        dispatch(CategoriesService.fetchAllCategories({})); // Close the dialog after successful update
       })
       .catch((error: any) => {
         toast.error(error);
@@ -85,7 +82,9 @@ const EditCategory: React.FC<EditCategoryProps> = ({ category, onClose }) => {
         <div className="bg-gray-100 p-6 rounded-lg flex flex-col gap-4">
           <div className="flex items-center justify-end">
             <label className="flex flex-col items-center justify-center w-32 h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-50">
-              {!imagePreview && <FiUpload size={24} className="text-gray-400" />}
+              {!imagePreview && (
+                <FiUpload size={24} className="text-gray-400" />
+              )}
               {imagePreview && (
                 <img
                   src={imagePreview}
