@@ -72,6 +72,8 @@ export const brandSLice = createSlice({
         {
           console.log(updatedBrand._id);
           console.log(brand._id);
+
+          
           
           
         return  brand._id === updatedBrand._id ? updatedBrand : brand

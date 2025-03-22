@@ -21,21 +21,19 @@ const {
   deleteSubCategoryValidator,
 } = require("../utils/validators/sub_category_validator");
 
-
+// router.use(authenticate,
+//   allowedTo("admin","manager"),)
 
 // subCategory  routes middlewares 
 subCategroyRoute
   .route("/")
-  .post(authenticate,
-    allowedTo("admin","manager"),setCategoryIdToBody ,createCategoryValidator, createSubCategory)
+  .post(setCategoryIdToBody ,createCategoryValidator, createSubCategory)
   .get(getSubCategories);
 
 subCategroyRoute
   .route("/:id")
   .get(getSubCategoryByIdValidator, getSubCategory)
-  .put(authenticate,
-    allowedTo("admin","manager"),updateSubCategoryValidator, updateSubCategory)
-  .delete(authenticate,
-    allowedTo("admin"),deleteSubCategoryValidator , deleteSubCategory);
+  .put(updateSubCategoryValidator, updateSubCategory)
+  .delete(deleteSubCategoryValidator , deleteSubCategory);
 
 module.exports = subCategroyRoute;

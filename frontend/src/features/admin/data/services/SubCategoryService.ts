@@ -18,7 +18,9 @@ export const SubCategoriesService = {
       } catch (error: any) {
         // Extract the error message from the response data
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data
+          );
         }
         return rejectWithValue(error.message);
       }
@@ -28,18 +30,27 @@ export const SubCategoriesService = {
   // Create a new subcategory
   createSubCategory: createAsyncThunk(
     "subCategories/create",
-    async (subCategoryData: { name: string; category: string }, { rejectWithValue }) => {
+    async (
+      subCategoryData: { name: string; category: string },
+      { rejectWithValue }
+    ) => {
       try {
-        const response = await axiosInstance.post("subcategories", subCategoryData, {
-          headers: {
-            "Content-Type": "application/json", // JSON content type
-          },
-        });
+        const response = await axiosInstance.post(
+          "subcategories",
+          subCategoryData,
+          {
+            headers: {
+              "Content-Type": "application/json", // JSON content type
+            },
+          }
+        );
         return response.data; // Return the created subcategory
       } catch (error: any) {
         // Extract the error message from the response data
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data
+          );
         }
         return rejectWithValue(error.message);
       }
@@ -55,7 +66,9 @@ export const SubCategoriesService = {
         return id; // Return the deleted subcategory ID
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data
+          );
         }
         return rejectWithValue(error.message);
       }
@@ -79,7 +92,9 @@ export const SubCategoriesService = {
         return response.data; // Return the updated subcategory
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data
+          );
         }
         return rejectWithValue(error.message);
       }

@@ -6,7 +6,7 @@ export const store = configureStore({
   reducer: {
     categories: categoriesReducer,
     brands: brandsReducer,
-    subCategores : subCategoryReducer
+    subCategories : subCategoryReducer
   },
 });
 

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SubCategoryModel } from "../models/SubCategoryModel"; // Import your SubCategoryModel
 import { PaginationData } from "../models/PaginationModel"; // Assuming you have a PaginationModel
 import { SubCategoriesService } from "../services/SubCategoryService";
+import SubCategoryItem from "../../presentation/components/subCategory/subCategoryItem";
 
 interface SubCategoryState {
   pageCount: number;
@@ -53,7 +54,8 @@ export const subCategorySlice = createSlice({
       })
       .addCase(SubCategoriesService.createSubCategory.fulfilled, (state, action) => {
         state.loading = false;
-        state.subCategoriesList.push(action.payload); // Add the new subcategory to the list
+        const subCategory: SubCategoryModel = action.payload.data; 
+        state.subCategoriesList.push(subCategory); // Add the new subcategory to the list
       })
       .addCase(SubCategoriesService.createSubCategory.rejected, (state, action) => {
         state.loading = false;
@@ -68,9 +70,13 @@ export const subCategorySlice = createSlice({
       .addCase(SubCategoriesService.updateSubCategory.fulfilled, (state, action) => {
         state.loading = false;
         // Update the subcategory in the list
-        const updatedSubCategory = action.payload;
-        state.subCategoriesList = state.subCategoriesList.map((subCategory) =>
-          subCategory._id === updatedSubCategory._id ? updatedSubCategory : subCategory
+        const updatedSubCategory = action.payload.data;
+        state.subCategoriesList = state.subCategoriesList.map((subCategory) => { 
+    
+          
+       return   subCategory._id === updatedSubCategory._id ? updatedSubCategory : subCategory
+
+        }
         );
       })
       .addCase(SubCategoriesService.updateSubCategory.rejected, (state, action) => {
