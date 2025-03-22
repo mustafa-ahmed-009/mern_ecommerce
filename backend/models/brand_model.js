@@ -13,22 +13,22 @@ const brandSchema = new mongoose.Schema(
       type: String,
       lowercase: true,
     },
-image:String
+    image: String,
   },
   { timestamps: true }
 );
 
-const setImageUrl = (doc) => { 
+const setImageUrl = (doc) => {
   if (doc.image && !doc.image.startsWith(process.env.BASE_URL)) {
-    const imageUrl = `${process.env.BASE_URL}/categories/${doc.image}`;
+    const imageUrl = `${process.env.BASE_URL}/brands/${doc.image}`;
     doc.image = imageUrl;
-}
-}
-brandSchema.post('save', function(doc) {
+  }
+};
+brandSchema.post("save", function (doc) {
   setImageUrl(doc);
 });
 
-brandSchema.post('init', function(doc) {
+brandSchema.post("init", function (doc) {
   setImageUrl(doc);
 });
 module.exports = mongoose.model("brand", brandSchema);

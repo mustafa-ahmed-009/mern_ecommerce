@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 const { uploadSingleImage } = require('../middlewares/uplaodImageMiddleWare');
 const sharp = require('sharp');
 exports.resizeBrandImage = asyncHandler(async (req, res, next) => {
-    const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
+    const filename = `brand-${uuidv4()}-${Date.now()}.jpeg`;
   
   if (req.file) { 
     await sharp(req.file.buffer)
