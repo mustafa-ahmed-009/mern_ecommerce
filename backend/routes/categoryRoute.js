@@ -38,7 +38,6 @@ router
   .put(
     uploadCategoryImage,
     resizeImage,
-
     updateCategoryValidator,
     updateCategory
   )

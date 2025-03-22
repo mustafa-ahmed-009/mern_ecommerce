@@ -1,7 +1,7 @@
-import { PaginationData } from "./../../data/models/PaginationModel";
 import { createSlice } from "@reduxjs/toolkit";
-import { Category } from "../../data/models/CategoryModel";
-import { CategoriesService } from "../../../admin/data/services/CategoriesService";
+import { CategoriesService } from "../services/CategoriesService";
+import { Category } from "../models/CategoryModel";
+import { PaginationData } from "../models/PaginationModel";
 interface CategoriesState {
   pageCount: number;
   categoriesList: Category[];

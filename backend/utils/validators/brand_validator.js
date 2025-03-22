@@ -16,15 +16,20 @@ module.exports = {
           .isLength({ max: 32 })
           .withMessage('Too long Brand name')
           .custom((val, { req }) => {
-            req.body.slug = slugify(val);
-            return true;
+            if (val) { 
+              req.body.slug = slugify(val);
+              return true;
+            }
           }),
           validationMiddleWare,
       ],
     updateBrandValidator: [
         check('id').isMongoId().withMessage('Invalid Brand id format'),
-        body('name').custom((val, { req }) => {
+      body('name').custom((val, { req }) => {
+        if (req.body.slug) { 
           req.body.slug = slugify(val);
+          return true;
+        }
           return true;
         }),
         validationMiddleWare,

@@ -7,14 +7,15 @@ const sharp = require('sharp');
 exports.resizeBrandImage = asyncHandler(async (req, res, next) => {
     const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
   
+  if (req.file) { 
     await sharp(req.file.buffer)
       .resize(600, 600)
       .toFormat('jpeg')
       .jpeg({ quality: 95 })
       .toFile(`uploads/brands/${filename}`);
-  
-    // Save image into our db
-    req.body.image = filename;
+        // Save image into our db
+        req.body.image = filename;
+  }
   
     next();
 });

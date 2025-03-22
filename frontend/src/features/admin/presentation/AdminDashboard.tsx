@@ -3,7 +3,7 @@ import { Routes, Route, NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ProductsManagemnt from "./pages/ProductsManagemnt";
 import OrdersManagement from "./pages/OrdersManagement";
-import AddingBarnds from "./pages/AddingBarnds";
+import AddingBarnds from "./pages/BrandsManagementPage";
 import AddingCategory from "./pages/CategoriesManagement";
 import AddingSubCategroy from "./pages/AddingSubCategroy";
 import AddingProduct from "./pages/AddingProduct";

@@ -18,8 +18,8 @@ const {
 } = require("../services/brandService");
 
 const router = express.Router();
-router.use(    authenticate,
-  allowedTo("admin","manager"),)
+// router.use(    authenticate,
+//   allowedTo("admin","manager"),)
 router
   .route("/")
   .get(getBrands)
@@ -27,7 +27,7 @@ router
 router
   .route("/:id")
   .get(getBrandValidator, getBrand)
-  .put(updateBrandValidator, updateBrand)
+  .put(uploadBrandImage, resizeBrandImage,updateBrandValidator, updateBrand)
   .delete(deleteBrandValidator, deleteBrand);
 
 module.exports = router;

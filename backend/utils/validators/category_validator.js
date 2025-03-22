@@ -26,7 +26,6 @@ module.exports = {
       body('name').custom((val, { req }) => {
         if (val) { 
           req.body.slug = slugify(val);
-   
         }
         return true;
         }),

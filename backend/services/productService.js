@@ -22,7 +22,8 @@ exports.uploadProductImages = uploadMixOfImages([
     if (req.files.imageCover) {
       const imageCoverFileName = `product-${uuidv4()}-${Date.now()}-cover.jpeg`;
   
-      await sharp(req.files.imageCover[0].buffer)
+      if (req.file) { 
+        await sharp(req.files.imageCover[0].buffer)
         .resize(2000, 1333)
         .toFormat('jpeg')
         .jpeg({ quality: 95 })
@@ -30,7 +31,7 @@ exports.uploadProductImages = uploadMixOfImages([
   
       // Save image into our db
       req.body.imageCover = imageCoverFileName;
-      console.log(req.body.imageCover);
+      }
       
       next();
     }

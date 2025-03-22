@@ -19,10 +19,10 @@ image:String
 );
 
 const setImageUrl = (doc) => { 
-  if (doc.image) { 
-      const imageUrl = `${process.env.BASE_URL}/brands/${doc.image}`;
-      doc.image = imageUrl;
-  }
+  if (doc.image && !doc.image.startsWith(process.env.BASE_URL)) {
+    const imageUrl = `${process.env.BASE_URL}/categories/${doc.image}`;
+    doc.image = imageUrl;
+}
 }
 brandSchema.post('save', function(doc) {
   setImageUrl(doc);
