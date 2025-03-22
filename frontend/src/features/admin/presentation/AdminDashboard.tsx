@@ -5,7 +5,7 @@ import ProductsManagemnt from "./pages/ProductsManagemnt";
 import OrdersManagement from "./pages/OrdersManagement";
 import AddingBarnds from "./pages/BrandsManagementPage";
 import AddingCategory from "./pages/CategoriesManagement";
-import AddingSubCategroy from "./pages/AddingSubCategroy";
+import AddingSubCategroy from "./pages/SubCategoryManagement";
 import AddingProduct from "./pages/AddingProduct";
 import AdminSidebar from "./components/AdminSideBar";
 
