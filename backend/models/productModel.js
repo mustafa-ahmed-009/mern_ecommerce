@@ -84,7 +84,6 @@ productSchema.pre(/^find/, function (next) {
   next();
 });
 const setImagesUrl = (doc) => { 
-  console.log(doc);
   const coverImageUrl = `${process.env.BASE_URL}/products/${doc.imageCover}`;
   doc.imageCover = coverImageUrl;
   if (doc.images) {
@@ -92,6 +91,7 @@ const setImagesUrl = (doc) => {
       return `${process.env.BASE_URL}/products/${img}`;
     });
   }
+  
 
 }
 productSchema.post('save', function(doc) {
