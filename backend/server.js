@@ -18,7 +18,6 @@ const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}.`);
   console.log(`process ${process.env.NODE_ENV}`);
 });
-app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:5173", // Allow multiple origins
@@ -27,9 +26,12 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
   })
 );
+app.use(express.static(path.join(__dirname, "uploads")));
 
 mountRoutes(app);
-app.use(express.static(path.join(__dirname, "uploads")));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // For form data
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 

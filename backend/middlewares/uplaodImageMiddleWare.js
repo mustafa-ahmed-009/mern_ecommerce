@@ -6,17 +6,17 @@ const multerOptions = () => {
 
     const multerStorage = multer.memoryStorage();
   
-  const multerFilter = function (req, file, cb,next) {
-
+  const multerFilter = function (req, file, cb, next) {
+    console.log("test");
+    
       if (file.mimetype.startsWith('image')) {
         cb(null, true);
       } else {
         cb(new ApiError('Only Images allowed', 400), false);
       }
     };
-  
-    const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
-  
+  const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+
     return upload;
 };
 exports.uploadSingleImage = (fieldName) => multerOptions().single(fieldName);
