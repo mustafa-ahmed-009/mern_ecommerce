@@ -146,7 +146,7 @@ const ProductDetails: React.FC = () => {
               </button>
             </div>
           </div>
-
+          { }
           {/* Product Info */}
           <div className="md:w-1/2">
             <div className="mb-4">

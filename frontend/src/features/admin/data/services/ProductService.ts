@@ -55,6 +55,8 @@ export const ProductsService = {
             "Content-Type": "multipart/form-data",
           },
         });
+        console.log(response);
+        
         return response.data; // Return the updated product
       } catch (error: any) {
         if (error.response && error.response.data) {

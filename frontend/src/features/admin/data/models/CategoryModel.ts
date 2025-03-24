@@ -5,4 +5,7 @@ export interface Category {
     image:string
     createdAt: string
     updatedAt: string 
+    category?: {
+        name:string
+    }
 }

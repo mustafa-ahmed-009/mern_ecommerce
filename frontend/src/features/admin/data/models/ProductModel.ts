@@ -9,7 +9,9 @@ export interface Product {
     colors: any[]
     imageCover: string
     images: string[]
-    category: string
+    category: {
+      name: string;  // Ensure category is an object
+    };
     subcategories: any[]
     ratingsQuantity: number
     _id: string

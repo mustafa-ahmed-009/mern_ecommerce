@@ -7,6 +7,7 @@ import AddingCategory from "./pages/CategoriesManagementPage";
 import AddingProudctsPage from "./pages/AddingProudctsPage";
 import AdminSidebar from "./components/AdminSideBar";
 import ProductManagementPage from "./pages/ProductManagementPage";
+import AdminProductDetails from "./pages/AdminProductDetails";
 
 // Admin page components
 
@@ -31,11 +32,16 @@ const AdminDashboard = () => {
         }}
       >
         <Routes>
-          <Route path="/products"   element={<ProductManagementPage />} />
+          <Route path="/products" element={<ProductManagementPage />} />
           <Route path="orders" element={<OrdersManagement />} />
           <Route path="add-brand" element={<AddingBarnds />} />
           <Route path="add-category" element={<AddingCategory />} />
           <Route path="add-product" element={<AddingProudctsPage />} />
+          <Route
+            path="/products/adminproductdetails/:id"
+            element={<AdminProductDetails />}
+          />{" "}
+          {/* ✅ Remove leading `/` */}
         </Routes>
       </div>
     </div>

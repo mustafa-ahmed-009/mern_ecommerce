@@ -29,7 +29,7 @@ router.route('/').get(getProducts).post(uploadProductImages,resizeProductImages,
 router
   .route('/:id')
   .get(getProductValidator, getProduct)
-  .put(updateProductValidator, updateProduct)
+  .put(uploadProductImages,resizeProductImages,updateProductValidator, updateProduct)
   .delete(deleteProductValidator, deleteProduct);
 
 module.exports = router;

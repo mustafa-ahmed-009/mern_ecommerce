@@ -25,6 +25,8 @@ const useProductManagement = () => {
       try {
         dispatch(CategoriesService.fetchAllCategories({})).unwrap();
         dispatch(SubCategoriesService.fetchAllSubCategories({})).unwrap()
+
+   
       } catch (error: any) {
         toast.error(error)
       }
@@ -58,7 +60,9 @@ const useProductManagement = () => {
   // Constants for available colors and subcategory options
   const availableColors: string[] = ["black", "red", "white"];
 
-
+  if (categoriesList.length > 0 && !mainCategory) {
+    setMainCategory(categoriesList[0]._id);
+  }
   // Handle color selection
   const handleColorSelection = (color: string) => {
     setSelectedColors((prev) =>
@@ -104,16 +108,35 @@ const useProductManagement = () => {
   // Validate form fields
   const validateForm = () => {
     const errors: { [key: string]: string } = {};
-
-    if (!productName.trim()) errors.productName = "اسم المنتج مطلوب";
-    if (!productDescription.trim()) errors.productDescription = "وصف المنتج مطلوب";
-    if (!productPrice.trim()) errors.productPrice = "سعر المنتج مطلوب";
-    if (!quantity) errors.quantity = "الكمية مطلوبة"; // Validate quantity
-    if (!mainCategory) errors.mainCategory = "التصنيف الرئيسي مطلوب";
-    if (!coverImage) errors.coverImage = "صورة الغلاف مطلوبة";
-
+    let isValid = true;
+  
+    if (!productName.trim()) {
+      errors.productName = "اسم المنتج مطلوب";
+      isValid = false;
+    }
+    if (!productDescription.trim()) {
+      errors.productDescription = "وصف المنتج مطلوب";
+      isValid = false;
+    }
+    if (!productPrice.trim()) {
+      errors.productPrice = "سعر المنتج مطلوب";
+      isValid = false;
+    }
+    if (!quantity) {
+      errors.quantity = "الكمية مطلوبة";
+      isValid = false;
+    }
+    if (!mainCategory) {
+      errors.mainCategory = "التصنيف الرئيسي مطلوب";
+      isValid = false;
+    }
+    if (!coverImage) {
+      errors.coverImage = "صورة الغلاف مطلوبة";
+      isValid = false;
+    }
+  
     setFormErrors(errors);
-    return Object.keys(errors).length === 0;
+    return isValid;
   };
   let myCategoryId = ""
   const transformCategoryToId = (categoryName:string) => {
@@ -131,6 +154,7 @@ const useProductManagement = () => {
 
   // Handle form submission
   const handleSubmit = async () => {
+    // Validate form first
     if (!validateForm()) {
       toast.error("يرجى ملء جميع الحقول المطلوبة");
       return;
@@ -140,52 +164,31 @@ const useProductManagement = () => {
     transformCategoryToId(mainCategory);
   
     try {
-      // Create FormData object to send to backend
       const formData = new FormData();
-  
-      // Add text fields
       formData.append("title", productName);
       formData.append("description", productDescription);
       formData.append("priceAfterDiscount", priceBeforeDiscount);
       formData.append("price", productPrice);
-      formData.append("quantity", quantity.toString()); // Add quantity
-      formData.append("category", myCategoryId);
+      formData.append("quantity", quantity.toString());
+      formData.append("category", mainCategory);
   
-      // Add each subcategory ID individually
       subcategoryIds.forEach((id) => {
-        formData.append("subcategories", id); // Append each subcategory ID
+        formData.append("subcategories", id);
       });
   
-      // Add cover image
       if (coverImage) {
         formData.append("imageCover", coverImage);
       }
   
-      // Add additional images
-      additionalImages.forEach((img, index) => {
-        formData.append(`images`, img.file);
+      additionalImages.forEach((img) => {
+        formData.append("images", img.file);
       });
   
-      // Log the form data for debugging
-      console.log(subcategoryIds);
-  
-      for (const pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
-  
-      // Submit the form data
       await dispatch(ProductsService.createProduct(formData)).unwrap();
-
       toast.success("تم اضافة المنتج بنجاح");
     } catch (error: any) {
-      // Handle different error types
-      if (error.message) {
-        toast.error(error.message);
-      } else if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("حدث خطأ أثناء إضافة المنتج");
-      }
+      const errorMessage = error.message || error.response?.data?.message || "حدث خطأ أثناء إضافة المنتج";
+      toast.error(errorMessage);
       console.error("Product creation error:", error);
     } finally {
       setIsSubmitting(false);

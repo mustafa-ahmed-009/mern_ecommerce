@@ -26,7 +26,6 @@ const AddingProudctsPage = () => {
     setSubCategories,
     selectedColors,
     availableColors,
-    subCategoryOptions,
     handleColorSelection,
     handleCoverImageChange,
     removeCoverImage,
@@ -197,41 +196,25 @@ const AddingProudctsPage = () => {
       {/* Main Category Dropdown */}
       <div className="mb-2">
         <select
+          
           value={mainCategory}
+        
           onChange={(e) => setMainCategory(e.target.value)}
           className={`w-full p-2 border ${
             formErrors.mainCategory ? "border-red-500" : ""
           }`}
         >
           {categoriesList.map((category) => {
-            return <option value={category.name}>{ category.name}</option>
+            return <option value={category._id}>{category.name}</option>
           })}
     
         </select>
-        {formErrors.mainCategory && (
-          <p className="text-red-500 text-xs mt-1">{formErrors.mainCategory}</p>
-        )}
+
       </div>
 
       {/* Subcategories Multi-Select using react-select */}
 
 
-      {/* Product Colors */}
-      <div className="mb-4">
-        <p className="text-gray-500">الألوان المتاحة للمنتج</p>
-        <div className="flex gap-2">
-          {availableColors.map((color) => (
-            <button
-              key={color}
-              className={`w-8 h-8 rounded-full border-2 ${
-                selectedColors.includes(color) ? "border-black" : ""
-              }`}
-              style={{ backgroundColor: color }}
-              onClick={() => handleColorSelection(color)}
-            ></button>
-          ))}
-        </div>
-      </div>
 
       {/* Submit Button */}
       <button

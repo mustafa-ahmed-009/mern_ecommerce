@@ -27,10 +27,10 @@ app.use(
   })
 );
 app.use(express.static(path.join(__dirname, "uploads")));
-
-mountRoutes(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For form data
+
+mountRoutes(app);
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
