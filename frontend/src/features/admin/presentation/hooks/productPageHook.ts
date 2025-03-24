@@ -32,7 +32,6 @@ const useProductManagement = () => {
   )
 
   const categoriesList = useSelector((state: RootState) => state.categories.categoriesList);
-  const subCategoriesList = useSelector((state: RootState) => state.subCategories.subCategoriesList);
 
   const [productName, setProductName] = useState<string>("");
   const [productDescription, setProductDescription] = useState<string>("");
@@ -58,10 +57,7 @@ const useProductManagement = () => {
 
   // Constants for available colors and subcategory options
   const availableColors: string[] = ["black", "red", "white"];
-  const subCategoryOptions: SubCategoryOption[] = subCategoriesList.map((subCategory) => ({
-    value: subCategory._id, // Use the category ID as the value
-    label: subCategory.name, // Use the category name as the label
-  }));
+
 
   // Handle color selection
   const handleColorSelection = (color: string) => {
@@ -178,17 +174,25 @@ const useProductManagement = () => {
       }
   
       // Submit the form data
-      await dispatch(ProductsService.createProduct(formData)).unwrap(); // Use .unwrap() to handle errors
+      await dispatch(ProductsService.createProduct(formData)).unwrap();
+
       toast.success("تم اضافة المنتج بنجاح");
     } catch (error: any) {
-      toast.error(error);
+      // Handle different error types
+      if (error.message) {
+        toast.error(error.message);
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("حدث خطأ أثناء إضافة المنتج");
+      }
+      console.error("Product creation error:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
   return {
     categoriesList,
-    subCategoriesList,
     productName,
     setProductName,
     productDescription,
@@ -210,7 +214,6 @@ const useProductManagement = () => {
     setSubCategories,
     selectedColors,
     availableColors,
-    subCategoryOptions,
     handleColorSelection,
     handleCoverImageChange,
     removeCoverImage,

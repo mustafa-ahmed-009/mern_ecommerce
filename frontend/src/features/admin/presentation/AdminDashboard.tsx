@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import OrdersManagement from "./pages/OrdersManagement";
 import AddingBarnds from "./pages/BrandsManagementPage";
 import AddingCategory from "./pages/CategoriesManagementPage";
-import AddingSubCategroy from "./pages/SubCategoryManagement";
 import AddingProudctsPage from "./pages/AddingProudctsPage";
 import AdminSidebar from "./components/AdminSideBar";
 import ProductManagementPage from "./pages/ProductManagementPage";
@@ -36,7 +35,6 @@ const AdminDashboard = () => {
           <Route path="orders" element={<OrdersManagement />} />
           <Route path="add-brand" element={<AddingBarnds />} />
           <Route path="add-category" element={<AddingCategory />} />
-          <Route path="add-subcategory" element={<AddingSubCategroy />} />
           <Route path="add-product" element={<AddingProudctsPage />} />
         </Routes>
       </div>

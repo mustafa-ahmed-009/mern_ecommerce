@@ -14,7 +14,6 @@ const AdminSidebar = () => {
     { path: "/admin/orders", label: "إدارة الطلبات" },
     { path: "/admin/add-brand", label: "أضف ماركة" },
     { path: "/admin/add-category", label: "أضف تصنيف" },
-    { path: "/admin/add-subcategory", label: "أضف تصنيف فرعي" },
     { path: "/admin/add-product", label: "أضف منتج" },
   ];
 

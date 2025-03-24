@@ -214,20 +214,7 @@ const AddingProudctsPage = () => {
       </div>
 
       {/* Subcategories Multi-Select using react-select */}
-      <div className="mb-2">
-        <p className="text-gray-500 mb-1">التصنيف الفرعي:</p>
-        <Select
-          options={subCategoryOptions}
-          isMulti
-          className="text-right"
-          placeholder="اختر التصنيفات الفرعية..."
-          onChange={(selectedOptions) =>
-            setSubCategories(
-              selectedOptions as { value: string; label: string }[]
-            )
-          }
-        />
-      </div>
+
 
       {/* Product Colors */}
       <div className="mb-4">
