@@ -10,14 +10,14 @@ const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   return (
-    <nav className="flex items-center justify-between bg-black h-[12vh] px-4 md:px-8 relative">
+    <nav className="flex items-center justify-between bg-[#2553D3] h-[12vh] px-4 md:px-8 relative w-full">
       {/* Logo */}
       <img src={logo} alt="Logo" className="h-[60%] w-auto object-contain cursor-pointer" onClick={()=>navigate("/")} />
 
       {/* Search Bar - Always Visible */}
       <input
         type="text"
-        className="border-2 bg-white text-center rounded-2xl px-4 py-1 w-full max-w-[300px] md:max-w-[400px] lg:max-w-[500px] focus:outline-none"
+        className=" bg-white text-center rounded-2xl px-4 py-1 w-full max-w-[300px] md:max-w-[400px] lg:max-w-[500px] focus:outline-none"
         placeholder="ابحث عن منتج"
       />
 

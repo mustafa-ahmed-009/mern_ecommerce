@@ -10,7 +10,8 @@ export interface Product {
     imageCover: string
     images: string[]
     category: {
-      name: string;  // Ensure category is an object
+      name: string,
+      _id:string// Ensure category is an object
     };
     subcategories: any[]
     ratingsQuantity: number
