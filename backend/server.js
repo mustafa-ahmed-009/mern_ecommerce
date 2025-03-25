@@ -9,6 +9,7 @@ const dbConnection = require("./config/database");
 const mountRoutes = require("./routes/index");  
 const globalErrorHandling = require("./middlewares/error_middleware");
 const ApiError = require("./utils/api_error");
+const cookieParser = require('cookie-parser');
 
 dotenv.config({ path: "config.env" });
 dbConnection();
@@ -28,7 +29,10 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // For form data
+app.use(express.urlencoded({ extended: true })); // 
+app.use(cookieParser());
+
+// For form data
 
 mountRoutes(app);
 

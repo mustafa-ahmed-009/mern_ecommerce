@@ -23,7 +23,7 @@ const NavBar = () => {
 
       {/* Desktop Icons (Hidden on small screens) */}
       <div className="hidden md:flex items-center gap-x-4">
-        <Link to="/login">
+        <Link to="/profile">
           <CgProfile className="text-white text-3xl cursor-pointer hover:text-gray-400 transition duration-200" />
         </Link>
         <Link to="/cart">

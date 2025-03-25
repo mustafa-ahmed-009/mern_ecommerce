@@ -2,6 +2,7 @@ import HomeViewCategories from "./components/HomeViewCategories";
 import NavBar from "./components/NavBar";
 
 const HomeView = () => {
+
   return (
     <>
       <div className="w-[85%]  m-auto p-2">
