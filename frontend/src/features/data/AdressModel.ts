@@ -5,7 +5,7 @@ export interface Address {
   phone: string
   postalCode: string
   details: string
-  _id?: string
+  _id?: string,
   
 }
 

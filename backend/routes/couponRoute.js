@@ -17,8 +17,8 @@ const {
 } = require("../services/couponService");
 
 const router = express.Router();
-router.use(  authenticate,
-  allowedTo("admin"),);
+// router.use(  authenticate,
+//   allowedTo("admin"),);
 router
   .route("/")
   .get(getCoupons)

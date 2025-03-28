@@ -1,3 +1,5 @@
+import { Address } from "../../data/AdressModel"
+
 export interface UserModel {
     name: string
     email: string
@@ -6,7 +8,7 @@ export interface UserModel {
     active: boolean
     wishlist: any[]
     _id: string
-    addresses: any[]
+    addresses: Address[]
     createdAt: string
     updatedAt: string
     __v: number

@@ -15,8 +15,6 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model) =>
   asyncHandler(async (req, res, next) => {
-    console.log(req.body);
-    
     const document = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
@@ -32,6 +30,7 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
   asyncHandler(async (req, res) => {
+    console.log(req.body);
     
     const newDoc = await Model.create(req.body);
     res.status(201).json({ data: newDoc });

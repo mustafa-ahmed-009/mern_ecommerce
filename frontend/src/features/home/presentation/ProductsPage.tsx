@@ -1,10 +1,14 @@
 import React from 'react'
 import { useLocation, useParams } from 'react-router-dom';
 import { Product } from '../../admin/data/models/ProductModel';
+import { useDispatch } from 'react-redux';
+import { CartService } from '../../cart/data/CartService';
+import { AppDispatch } from '../../../redux/store';
 
 const ProductsPage = () => {
     const { id } = useParams(); 
-    const location = useLocation();
+  const location = useLocation();
+  const dispatch = useDispatch<AppDispatch>(); 
     const product:Product = location.state?.product;
   return (
 <div className='flex flex-col'>
@@ -23,9 +27,8 @@ const ProductsPage = () => {
                       <button className=''>-</button>
                       <p>value</p>
                       <button>+</button>
-
                       </div>
-                      <button className='bg-primary text-white rounded-2xl w-1/3'>add to cart </button>
+                      <button className='bg-primary text-white rounded-2xl w-1/3' onClick={()=>dispatch(CartService.addAnItemToTheCart(id!))}>add to cart </button>
 
            </div>
 

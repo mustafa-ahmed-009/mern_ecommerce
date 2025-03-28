@@ -1,4 +1,3 @@
-// components/ProfilePage.tsx
 import React from 'react';
 import { FaTrash, FaShoppingBag, FaMapMarkerAlt, FaPlus, FaEdit } from 'react-icons/fa';
 import { useProfile } from '../hooks/useProfileHook';
@@ -12,6 +11,7 @@ export const ProfilePage = () => {
     userAddress,
     isAddressDialogOpen,
     newAddress,
+    addressErrors,
     handleLogout,
     handleRemoveFromWishlist,
     handleViewProduct,
@@ -24,111 +24,127 @@ export const ProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-{isAddressDialogOpen && (
+      {/* Address Dialog */}
+      {isAddressDialogOpen && (
   <AddressDialog title="Add New Address" onClose={() => setIsAddressDialogOpen(false)}>
     <form onSubmit={handleSubmitAddress} className="space-y-4">
-      {/* Governorate Field */}
-      <div>
-        <label htmlFor="governorate" className="block text-sm font-medium text-gray-700 mb-1">
-          Governorate
-        </label>
-        <input
-          type="text"
-          id="governorate"
-          name="governorate"
-          value={newAddress.governorate}
-          onChange={handleAddressInputChange}
-          placeholder="Cairo, Alexandria, etc."
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Country Field */}
+        <div className="col-span-2 md:col-span-1">
+          <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
+            Country
+          </label>
+          <input
+            type="text"
+            id="country"
+            name="country"
+            value={newAddress.country}
+            onChange={handleAddressInputChange}
+            placeholder="Egypt"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          {addressErrors.country && (
+            <p className="mt-1 text-sm text-red-600">{addressErrors.country}</p>
+          )}
+        </div>
+
+        {/* Governorate Field */}
+        <div className="col-span-2 md:col-span-1">
+          <label htmlFor="governorate" className="block text-sm font-medium text-gray-700 mb-1">
+            Governorate
+          </label>
+          <input
+            type="text"
+            id="governorate"
+            name="governorate"
+            value={newAddress.governorate}
+            onChange={handleAddressInputChange}
+            placeholder="Cairo, Alexandria, etc."
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          {addressErrors.governorate && (
+            <p className="mt-1 text-sm text-red-600">{addressErrors.governorate}</p>
+          )}
+        </div>
+
+        {/* Street Field */}
+        <div className="col-span-2 md:col-span-1">
+          <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">
+            Street Address
+          </label>
+          <input
+            type="text"
+            id="street"
+            name="street"
+            value={newAddress.street}
+            onChange={handleAddressInputChange}
+            placeholder="123 Main St"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          {addressErrors.street && (
+            <p className="mt-1 text-sm text-red-600">{addressErrors.street}</p>
+          )}
+        </div>
+
+        {/* Phone Field */}
+        <div className="col-span-2 md:col-span-1">
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={newAddress.phone}
+            onChange={handleAddressInputChange}
+            placeholder="+201234567890"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          {addressErrors.phone && (
+            <p className="mt-1 text-sm text-red-600">{addressErrors.phone}</p>
+          )}
+        </div>
+
+        {/* Postal Code Field */}
+        <div className="col-span-2 md:col-span-1">
+          <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-1">
+            Postal Code
+          </label>
+          <input
+            type="text"
+            id="postalCode"
+            name="postalCode"
+            value={newAddress.postalCode}
+            onChange={handleAddressInputChange}
+            placeholder="12345"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          {addressErrors.postalCode && (
+            <p className="mt-1 text-sm text-red-600">{addressErrors.postalCode}</p>
+          )}
+        </div>
+
+        {/* Details Field - Full width */}
+        <div className="col-span-2">
+          <label htmlFor="details" className="block text-sm font-medium text-gray-700 mb-1">
+            Additional Details
+          </label>
+          <input
+            type="text"
+            id="details"
+            name="details"
+            value={newAddress.details}
+            onChange={handleAddressInputChange}
+            placeholder="Apartment number, building, etc."
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
       </div>
-
-      {/* Street Field */}
-      <div>
-        <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">
-          Street Address
-        </label>
-        <input
-          type="text"
-          id="street"
-          name="street"
-          value={newAddress.street}
-          onChange={handleAddressInputChange}
-          placeholder="123 Main St"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      {/* Phone Field */}
-      <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-          Phone Number
-        </label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          value={newAddress.phone}
-          onChange={handleAddressInputChange}
-          placeholder="+201234567890"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      {/* Country Field */}
-      <div>
-        <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
-          Country
-        </label>
-        <input
-          type="text"
-          id="country"
-          name="country"
-          value={newAddress.country}
-          onChange={handleAddressInputChange}
-          placeholder="Egypt"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      {/* Postal Code Field */}
-      <div>
-        <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-1">
-          Postal Code
-        </label>
-        <input
-          type="text"
-          id="postalCode"
-          name="postalCode"
-          value={newAddress.postalCode}
-          onChange={handleAddressInputChange}
-          placeholder="12345"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      {/* Details Field */}
-      <div>
-        <label htmlFor="details" className="block text-sm font-medium text-gray-700 mb-1">
-          Additional Details
-        </label>
-        <input
-          type="text"
-          id="details"
-          name="details"
-          value={newAddress.details}
-          onChange={handleAddressInputChange}
-          placeholder="Apartment number, building, etc."
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-
 
       <div className="flex justify-end space-x-3 pt-4">
         <button
@@ -238,32 +254,29 @@ export const ProfilePage = () => {
                 </button>
               </div>
 
-              {userAddress!.length > 0 ? (
+              {userAddress && userAddress.length > 0 ? (
                 <div className="space-y-4">
-                  {userAddress!.map((address) => (
+                  {userAddress.map((address) => (
                     <div 
-                      key={address.id} 
-                      className={`bg-white p-4 rounded-lg shadow-sm border-l-4 ${address.isDefault ? 'border-blue-500' : 'border-transparent'}`}
+                      key={address._id} 
+                      className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-blue-500"
                     >
                       <div className="flex justify-between items-start">
                         <div>
                           <h3 className="font-medium text-gray-800 flex items-center">
-                            {address.label}
-                            {address.isDefault && (
-                              <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                                Default
-                              </span>
-                            )}
+                            <FaMapMarkerAlt className="mr-2 text-blue-500" />
+                            {address.governorate}
                           </h3>
                           <p className="text-gray-600">{address.street}</p>
-                          <p className="text-gray-600">{address.city}, {address.country} {address.postalCode}</p>
+                          <p className="text-gray-600">, {address.governorate}, {address.country} {address.postalCode}</p>
+                          <p className="text-gray-600">{address.phone}</p>
+                          {address.details && (
+                            <p className="text-gray-600">Details: {address.details}</p>
+                          )}
                         </div>
                         <div className="flex space-x-2">
-        
                           <button
-                            onClick={() => {
-                              handleRemoveAddress(address._id)
-                            }}
+                            onClick={() => handleRemoveAddress(address._id!)}
                             className="text-red-500 hover:text-red-700 text-sm flex items-center"
                             title="Remove address"
                           >

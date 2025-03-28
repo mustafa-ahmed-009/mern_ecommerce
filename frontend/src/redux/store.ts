@@ -5,6 +5,8 @@ import { subCategoryReducer } from "../features/admin/data/slices/SubCategorySLi
 import { productsReducer } from "../features/admin/data/slices/ProductSlice";
 import { authReducer } from "../features/Auth/data/AuthSlice";
 import { userReducer } from "../features/data/UserSlice";
+import { cartReducer } from "../features/cart/data/CartSlice";
+import { orderReducer } from "../features/cart/data/OrderSlice";
 export const store = configureStore({
   reducer: {
     categories: categoriesReducer,
@@ -12,7 +14,11 @@ export const store = configureStore({
     subCategories: subCategoryReducer,
     products: productsReducer,
     auth: authReducer,
-    user:userReducer
+    user: userReducer, 
+    cart: cartReducer, 
+    orders:orderReducer
+    
+    
   },
 });
 

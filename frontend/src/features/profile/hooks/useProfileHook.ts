@@ -32,6 +32,7 @@ const validateAddress = (address: AddressFormValues): { isValid: boolean; errors
   if (!address.phone || !phoneRegex.test(address.phone.replace(/\s+/g, ''))) {
     errors.phone = 'Invalid phone number. Must be an Egyptian mobile number (010/011/012/015 followed by 8 digits)';
   }
+  // City validation (new)
 
   // Postal Code validation (assuming 5-digit postal code)
   const postalCodeRegex = /^\d{5}$/;
@@ -155,7 +156,7 @@ export const useProfile = () => {
         dispatch(UserService.checkAuth())
       
     )
-    toast.success(`Address ${addressId} removed`);
+    toast.success(`the Address has been successfully removed`);
 
   };
 
@@ -172,7 +173,7 @@ export const useProfile = () => {
     handleViewProduct,
     handleAddressInputChange,
     handleSubmitAddress,
-    handleSetDefaultAddress,
+  handleSetDefaultAddress,
     handleRemoveAddress,
     setIsAddressDialogOpen
   };
