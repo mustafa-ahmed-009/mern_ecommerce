@@ -5,12 +5,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Product } from '../admin/data/models/ProductModel';
 import { ProductsService } from '../admin/data/services/ProductService';
 import { CiHeart } from 'react-icons/ci';
+import { UserService } from '../data/UserService';
+import { FaHeart } from 'react-icons/fa';
 
 const ProductsOfCategory = () => {
   const dispatch = useDispatch<AppDispatch>(); 
   const { id } = useParams(); 
   const navigate = useNavigate(); 
   const { productsList, loading, error } = useSelector((state: RootState) => state.products); 
+  const userState = useSelector((state: RootState) => state.user.user); 
   useEffect(
     () => {
       dispatch(ProductsService.fetchAllProducts({}))
@@ -24,15 +27,21 @@ const ProductsOfCategory = () => {
   return (
 <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 m-2'>
 {desiredProducts.map((product) => {
-  return <div className='' onClick={() => navigate(`/products/${product._id}`, {
-    state:{product}
-  })
-  }>
-          <img src={product.imageCover} alt="" className='border-1 rounded-2xl border-gray-300' />
-          <p>{product.title}</p>
+  return <div className=''>
+    <div onClick={() => navigate(`/products/${product._id}`, {
+  state:{product}
+})
+} >
+    <img src={product.imageCover} alt="" className='border-1 rounded-2xl border-gray-300' />
+    <p>{product.title}</p>
+ </div>
           <div className='flex justify-between'>
           <p className='text-red-600'>{ product.price}$</p>
-          <CiHeart  size={30}/>
+{userState?.wishlist.includes(product._id) ?       <FaHeart size={30} onClick={
+        ()=>dispatch(UserService.removeProductFromWishList(product._id))
+          }/>:  <CiHeart size={30} onClick={
+            ()=>dispatch(UserService.addPrdouctToWishList(product._id))
+              }/> }
           </div>
         </div>
       })}
@@ -41,3 +50,4 @@ const ProductsOfCategory = () => {
 }
 
 export default ProductsOfCategory
+
