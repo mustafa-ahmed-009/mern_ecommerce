@@ -111,5 +111,6 @@ export const UserService = {
             return rejectWithValue(error.message);
         }
     }
-),
+  ),
+  
 }

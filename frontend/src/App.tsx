@@ -14,10 +14,10 @@ import ProductsPage from "./features/home/presentation/ProductsPage";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./redux/store";
 import { useEffect } from "react";
-import ProfilePage from "./features/profile/presentation/ProfilePage";
 import UserProtectedRoutes from "./utils/components/UserProtectedRoutes";
 import AdminProtectedRoutes from "./utils/components/AdminProtectedRoutes";
 import { UserService } from "./features/data/UserService";
+import { ProfilePage } from "./features/profile/presentation/ProfilePage";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();

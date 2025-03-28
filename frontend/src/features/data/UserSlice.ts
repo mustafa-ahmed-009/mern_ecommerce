@@ -95,7 +95,38 @@ export const userSlice = createSlice({
       .addCase(UserService.removeProductFromWishList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(UserService.addingNewAddress.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(UserService.addingNewAddress.fulfilled, (state, action) => {
+        state.loading = false;
+        if (state.user && action.payload) {
+          // Create a new user object with the updated addresses array
+          state.user = {
+            ...state.user,
+            addresses: [
+              ...(state.user.addresses || []), // Handle case where addresses might be undefined
+              action.payload.data
+            ]
+          };
+        }
+      })
+  .addCase(UserService.removeAnAddress.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(UserService.removeAnAddress.fulfilled, (state, action) => {
+        state.loading = false;
+
+      })
+      .addCase(UserService.removeAnAddress.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
+    
+    
   },
 });
 

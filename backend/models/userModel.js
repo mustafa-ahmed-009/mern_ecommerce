@@ -47,9 +47,10 @@ const userSchema = new mongoose.Schema(
     addresses: [
       {
         id: { type: mongoose.Schema.ObjectId, },
-        alias : { type: String, },
+        country: { type: String, },
+        governorate : {type:String} , 
+        street: { type: String, },
         phone: { type: String, },
-        city: { type: String, },
         postalCode: { type: String, },
        details:{ type: String}
 

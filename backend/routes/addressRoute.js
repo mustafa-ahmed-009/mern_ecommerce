@@ -13,6 +13,5 @@ router
   .route("/")
   .post(addAddress)
   .get(getLoggedUserAddresses);
-router.delete('/:productId', removeAddress);  
-// router.delete('/remove/:productId', authService.protect, removeProductFromWishList);
+router.delete('/:addressId', removeAddress);  
 module.exports = router;
