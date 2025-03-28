@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthService } from "../../data/AuthService";
 import { AppDispatch } from "../../../../redux/store";
 import toast from "react-hot-toast";
+import { UserService } from "../../../data/UserService";
 
 const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -39,6 +40,9 @@ const LoginPage = () => {
     try {
       setLoading(true);
       await dispatch(AuthService.login(formData));
+      await dispatch(UserService.checkAuth());
+      
+
       toast.success("تم تسجيل الدخول بنجاح");
       navigate("/"); // Redirect to home page after successful login
     } catch (error: any) {

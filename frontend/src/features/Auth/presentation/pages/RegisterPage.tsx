@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../../../redux/store";
 import { AuthService } from "../../data/AuthService";
 import toast from "react-hot-toast";
+import { UserService } from "../../../data/UserService";
 
 const RegisterPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -36,6 +37,8 @@ const RegisterPage = () => {
 
     try {
       await dispatch(AuthService.register({ name, email, password, passwordConfirm }));
+            await dispatch(UserService.checkAuth());
+      
       toast.success("Registration successful!");
       navigate("/"); 
     } catch (error: any) {

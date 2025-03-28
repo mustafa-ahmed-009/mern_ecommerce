@@ -14,15 +14,15 @@ import ProductsPage from "./features/home/presentation/ProductsPage";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./redux/store";
 import { useEffect } from "react";
-import { AuthService } from "./features/Auth/data/AuthService";
-import ProfilePage from "./features/home/presentation/ProfilePage";
+import ProfilePage from "./features/profile/presentation/ProfilePage";
 import UserProtectedRoutes from "./utils/components/UserProtectedRoutes";
 import AdminProtectedRoutes from "./utils/components/AdminProtectedRoutes";
+import { UserService } from "./features/data/UserService";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(AuthService.checkAuth());
+    dispatch(UserService.checkAuth());
   });
   return (
     <>

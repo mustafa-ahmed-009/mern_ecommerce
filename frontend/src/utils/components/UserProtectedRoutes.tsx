@@ -5,9 +5,8 @@ import { RootState } from "../../redux/store";
 const UserProtectedRoutes = () => {
   // const dispatch = useDispatch<AppDispatch>();
 
-  const state = useSelector((state: RootState) => state.auth);
-  console.log(state.user);
-  if (state.user == null) {
+  const user = useSelector((state: RootState) => state.user.user);
+  if (user == null) {
     return <Navigate to="/login" />;
   } else {
     return <Outlet />;

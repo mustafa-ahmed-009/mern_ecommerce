@@ -232,7 +232,10 @@ exports.logout = asyncHandler(async (req, res) => {
 
 exports.checkAuth = (req, res) => {
   try {
+    const user = req.user.doc; 
+    
     const userWithoutPassword = { ...req.user._doc };
+
     delete userWithoutPassword.password;
     res.status(200).json(userWithoutPassword);
   } catch (error) {

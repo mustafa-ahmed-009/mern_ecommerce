@@ -4,13 +4,15 @@ import { brandsReducer } from "../features/admin/data/slices/BrandsSLice";
 import { subCategoryReducer } from "../features/admin/data/slices/SubCategorySLice";
 import { productsReducer } from "../features/admin/data/slices/ProductSlice";
 import { authReducer } from "../features/Auth/data/AuthSlice";
+import { userReducer } from "../features/data/UserSlice";
 export const store = configureStore({
   reducer: {
     categories: categoriesReducer,
     brands: brandsReducer,
     subCategories: subCategoryReducer,
     products: productsReducer,
-    auth:authReducer
+    auth: authReducer,
+    user:userReducer
   },
 });
 
