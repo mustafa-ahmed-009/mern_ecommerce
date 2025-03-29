@@ -9,6 +9,9 @@ interface ProductsState {
   loading: boolean;
   error: string | null;
   paginationData: PaginationData;
+  currentProduct: Product | null;
+  loadingSingle: boolean; // Loading for single product view
+  errorSingle: string | null;
 }
 
 const initialState: ProductsState = {
@@ -22,6 +25,9 @@ const initialState: ProductsState = {
     numberOfPages: 0, // Default value
     next: 0, // Default value
   },
+  currentProduct: null,
+  loadingSingle: false,
+  errorSingle: null,
 };
 
 export const productsSlice = createSlice({
@@ -94,6 +100,19 @@ export const productsSlice = createSlice({
       .addCase(ProductsService.deleteProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(ProductsService.fetchSingleProduct.pending, (state) => {
+        state.loadingSingle = true;
+        state.errorSingle = null;
+        state.currentProduct = null; // Clear previous while loading
+      })
+      .addCase(ProductsService.fetchSingleProduct.fulfilled, (state, action) => {
+        state.loadingSingle = false;
+        state.currentProduct = action.payload; // Store the fetched product
+      })
+      .addCase(ProductsService.fetchSingleProduct.rejected, (state, action) => {
+        state.loadingSingle = false;
+        state.errorSingle = action.payload as string;
       });
   },
 });

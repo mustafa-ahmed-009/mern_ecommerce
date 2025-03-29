@@ -18,6 +18,7 @@ import UserProtectedRoutes from "./utils/components/UserProtectedRoutes";
 import AdminProtectedRoutes from "./utils/components/AdminProtectedRoutes";
 import { UserService } from "./features/data/UserService";
 import { ProfilePage } from "./features/profile/presentation/ProfilePage";
+import OrdersPage from "./features/orders/presentation/OrdersPage";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,9 +41,11 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/cart/checkout" element={<CheckOutPage />} />
           <Route element={<UserProtectedRoutes />}>
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/cart/checkout" element={<CheckOutPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
+
           </Route>
         </Routes>
         <Toaster />

@@ -5,20 +5,18 @@ import { Address } from "../../data/AdressModel";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CartService } from "../data/CartService";
 import toast from "react-hot-toast";
-import { OrdersService } from "../data/OrderService";
-import { OrderModel } from "../data/orderModel";
+import { OrdersService } from "../../orders/data/OrderService";
+import { OrderModel } from "../../orders/data/orderModel";
 
 const CheckOutPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("cash");
   const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
   const [promoCode, setPromoCode] = useState("");
-  const naviagte = useNavigate(); 
+  const naviagte = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
   // Get user addresses from Redux store
-  const userState = useSelector(
-    (state: RootState) => state.user.user 
-  );
+  const userState = useSelector((state: RootState) => state.user.user);
   const userAddresses = useSelector(
     (state: RootState) => state.user.user?.addresses || []
   );
@@ -27,8 +25,8 @@ const CheckOutPage = () => {
   let cartState = useSelector((state: RootState) => state.cart.cart);
 
   // Total from previous page (you'll pass this as a prop or get from Redux)
-  const total = cartState?.totalCartPrice
-// Example total, replace with actual logic
+  const total = cartState?.totalCartPrice;
+  // Example total, replace with actual logic
 
   const handleAddressSelection = (addressId: string) => {
     setSelectedAddress(addressId);
@@ -40,44 +38,46 @@ const CheckOutPage = () => {
 
   const handleApplyPromoCode = () => {
     try {
-      dispatch(CartService.applyCoupon(promoCode)).unwrap()
-    } catch (error:any) {
-     toast.error(error);
-     
+      dispatch(CartService.applyCoupon(promoCode)).unwrap();
+    } catch (error: any) {
+      toast.error(error);
     }
   };
-  const getTheCurrentAddressData = ( ) : Address => {
-
-    const arr = userState!.addresses.filter((address) => address._id === selectedAddress)
-    return arr[0]; 
-  }
+  const getTheCurrentAddressData = (): Address => {
+    const arr = userState!.addresses.filter(
+      (address) => address._id === selectedAddress
+    );
+    return arr[0];
+  };
   const handleOrderSubmittion = () => {
-    if(!selectedAddress?.trim())  toast.error("please choose an address")
+    if (!selectedAddress?.trim()) toast.error("please choose an address");
     const selectedAddressModel = getTheCurrentAddressData();
     const orderModel: OrderModel = {
       customerName: userState!.name.trim(), // Ensure no whitespace
-      status: "Pending", 
+      status: "Pending",
       totalAmount: total!,
       shippingCost: 20,
       shippingAddress: {
         country: selectedAddressModel.country,
         governorate: selectedAddressModel.governorate,
-        street:selectedAddressModel.street, // Ensure no whitespace
+        street: selectedAddressModel.street, // Ensure no whitespace
         phone: selectedAddressModel.phone,
         postalCode: selectedAddressModel.postalCode,
-        details: selectedAddressModel.details
+        details: selectedAddressModel.details,
       },
       cartItems: cartState?.cartItems || [], // Provide fallback
     };
     console.log(orderModel);
-    
-try {
-  dispatch(OrdersService.addOrder(orderModel)).unwrap()
-  toast.success("order has been succeffuly placed")
-} catch (error:any) {
-  toast.error(error)
-}
- }
+
+    try {
+      dispatch(OrdersService.addOrder(orderModel)).unwrap();
+      toast.success("order has been succeffuly placed");
+      dispatch(CartService.deleteTheWholeCart()).unwrap();
+     naviagte("/orders")
+    } catch (error: any) {
+      toast.error(error);
+    }
+  };
 
   return (
     <div className="flex flex-col bg-gray-100 p-6 rounded-lg max-w-2xl mx-auto space-y-6 my-2">
@@ -87,9 +87,13 @@ try {
         {userAddresses.length === 0 ? (
           <div>
             <p className="text-gray-500">No addresses found</p>
-            <button             className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 my-2"
- onClick={()=>naviagte("/profile")}>click here to add an address in the profile page</button>
-       </div>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 my-2"
+              onClick={() => naviagte("/profile")}
+            >
+              click here to add an address in the profile page
+            </button>
+          </div>
         ) : (
           <div className="space-y-2">
             {userAddresses.map((address: Address) => (
@@ -131,18 +135,17 @@ try {
         <div className="flex justify-between mb-3">
           <span>Total</span>
           <span className="font-bold">${total!.toFixed(2)}</span>
-
         </div>
-        {
-            cartState?.totalPriceAfterDiscount ? 
-            <div>
-                        <div className="flex justify-between">
+        {cartState?.totalPriceAfterDiscount ? (
+          <div>
+            <div className="flex justify-between">
               <span>Total after discount :</span>
-                              <p className="font-bold"> ${ cartState.totalPriceAfterDiscount}</p>
-</div>
-</div>
-            : ""}
-        
+              <p className="font-bold"> ${cartState.totalPriceAfterDiscount}</p>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
 
         {/* Promo Code Section */}
         <div className="flex space-x-2 mt-4">
@@ -160,8 +163,11 @@ try {
             Apply
           </button>
         </div>
-        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 my-2 
-        " onClick={handleOrderSubmittion}>
+        <button
+          className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 my-2 
+        "
+          onClick={handleOrderSubmittion}
+        >
           Submit order
         </button>
       </div>

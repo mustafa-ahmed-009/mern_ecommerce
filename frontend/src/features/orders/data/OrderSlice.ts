@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CartModel } from "./CartModel";
-import { CartService } from "./CartService";
-import { OrderModel } from "./orderModel";
+import { CartModel } from "../../cart/data/CartModel";
+import { CartService } from "../../cart/data/CartService";
 import { OrdersService } from "./OrderService";
+import { OrderModel } from "./orderModel";
 
 
 interface ordersState {
@@ -35,9 +35,20 @@ export const orderSlice = createSlice({
         //         state.ordersList.push()
         //     }
         //   }
-          state.ordersList.push(action.payload)
+          state.ordersList.push(action.payload.data)
       })
-      .addCase(OrdersService.addOrder.rejected, (state, action) => {
+ 
+      .addCase(OrdersService.getAllOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(OrdersService.getAllOrders.fulfilled, (state,action) => {
+        state.loading = false;
+        for (let index = 0; index < action.payload.data.length; index++) {
+          state.ordersList.push(action.payload.data[index])
+        }
+      })
+      .addCase(OrdersService.getAllOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })

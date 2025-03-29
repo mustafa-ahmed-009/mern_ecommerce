@@ -20,11 +20,11 @@ export const OrdersService = {
     }
   ),
 
-  getUserCartItems: createAsyncThunk(
-    "cart/getCartItems",
+  getAllOrders: createAsyncThunk(
+    "orders/getAllOrders",
     async (_, { rejectWithValue }) => {
       try {
-        const response = await axiosInstance.get("cart");
+        const response = await axiosInstance.get("orders");
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {

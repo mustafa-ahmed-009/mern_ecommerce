@@ -12,7 +12,7 @@ const HomeView = () => {
           Located in Portland, Oregon USA, we are the North American Distributor for the major brands of table tennis. Offering premium customer service, we are players and lovers of table tennis, dedicated to elevating the game</p>
         <p className="text-center my-2">Featured products</p>
 
-        <div className="h-[40vh] bg-blue-300 my-2">products</div>
+        <div className="h-[40vh] bg-blue-300 my-2">featured products </div>
         <div className="h-[15vh] bg-blue-300 my-2">brands slider</div>
       </div>
     </>

@@ -86,6 +86,19 @@ export const CartService = {
       }
     }
   ),
+  deleteTheWholeCart: createAsyncThunk(
+    "cart/deleteTheWholeCart",
+    async (_, { rejectWithValue }) => {
+      try {
+      await axiosInstance.delete(`cart`);
+      } catch (error: any) {
+        if (error.response && error.response.data) {
+          return rejectWithValue(error.response.data.message || error.response.data);
+        }
+        return rejectWithValue(error.message);
+      }
+    }
+  ),
 };
 
 // ✅ Fixing interface names (typo)

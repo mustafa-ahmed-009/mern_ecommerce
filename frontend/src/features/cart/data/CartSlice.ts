@@ -28,6 +28,7 @@ export const cartSlice = createSlice({
       })
       .addCase(CartService.addAnItemToTheCart.fulfilled, (state, action) => {
         state.loading = false;
+        state.cart!.cartItems = action.payload.data.cartItems; 
       })
       .addCase(CartService.addAnItemToTheCart.rejected, (state, action) => {
         state.loading = false;
@@ -79,6 +80,17 @@ export const cartSlice = createSlice({
         state.cart = action.payload.data;
       })
       .addCase(CartService.applyCoupon.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(CartService.deleteTheWholeCart.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(CartService.deleteTheWholeCart.fulfilled, (state, ) => {
+        state.loading = false;
+      })
+      .addCase(CartService.deleteTheWholeCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })

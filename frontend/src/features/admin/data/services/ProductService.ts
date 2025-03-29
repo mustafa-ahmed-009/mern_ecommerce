@@ -82,4 +82,37 @@ export const ProductsService = {
       }
     }
   ),
+  fetchSingleProduct: createAsyncThunk<
+  Product, // Type of the successful return value (the Product object)
+  string,  // Type of the argument passed to the thunk (the product ID)
+  { rejectValue: string } // Type for rejectWithValue payload
+>(
+  "products/fetchById", // <<< CORRECTED Action Type Name
+  async (id: string, { rejectWithValue }) => {
+      try {
+          // Make the API call AND get the response
+          const response = await axiosInstance.get<{ data: Product }>(`products/${id}`); // Adjust type based on actual API response structure
+
+          // --- RETURN THE ACTUAL PRODUCT DATA ---
+          // Check common structures: is data nested under a 'data' key?
+          if (response.data && response.data.data) {
+               return response.data.data; // <<< Return the product object
+          }
+          // Or maybe the product is directly in response.data?
+          // else if (response.data) {
+          //    return response.data as Product; // Cast if necessary
+          //}
+
+          // If response structure is unexpected
+          throw new Error("Unexpected API response structure for single product.");
+
+      } catch (error: any) {
+          const message =
+              (error.response && error.response.data && (error.response.data.message || JSON.stringify(error.response.data))) ||
+              error.message ||
+              error.toString();
+          return rejectWithValue(message);
+      }
+  }
+),
 };
