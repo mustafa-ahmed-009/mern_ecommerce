@@ -39,13 +39,13 @@ const BransList = () => {
               onClick={() => setEditingBrand(brand)} // Open the edit dialog
               className="bg-blue-500 text-white px-4 py-2 rounded-lg"
             >
-              تعديل
+           edit
             </button>
             <button
               onClick={() => setDeletingBrandId(brand._id)} // Open the confirmation dialog
               className="bg-red-500 text-white px-4 py-2 rounded-lg"
             >
-              حذف
+          remove
             </button>
           </div>
         </div>

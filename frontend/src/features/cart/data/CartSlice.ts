@@ -28,7 +28,7 @@ export const cartSlice = createSlice({
       })
       .addCase(CartService.addAnItemToTheCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart!.cartItems = action.payload.data.cartItems; 
+     state.cart!.cartItems =   action.payload.data.cartItems
       })
       .addCase(CartService.addAnItemToTheCart.rejected, (state, action) => {
         state.loading = false;
@@ -89,6 +89,7 @@ export const cartSlice = createSlice({
       })
       .addCase(CartService.deleteTheWholeCart.fulfilled, (state, ) => {
         state.loading = false;
+        state.cart = null;
       })
       .addCase(CartService.deleteTheWholeCart.rejected, (state, action) => {
         state.loading = false;

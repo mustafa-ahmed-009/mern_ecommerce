@@ -10,6 +10,8 @@ export const CartService = {
         const response = await axiosInstance.post("cart", {
           productId,
         });
+        console.log(response.data);
+        
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
@@ -25,6 +27,7 @@ export const CartService = {
     async (_, { rejectWithValue }) => {
       try {
         const response = await axiosInstance.get("cart");
+      
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {

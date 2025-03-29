@@ -7,6 +7,11 @@ const orderSchema = new mongoose.Schema(
       trim: true,
       required: [true, "name required"],
     },
+    customerId: {
+      type: String,
+      trim: true,
+      required: [true, "customer Id required"],
+    },
     cartItems: [
       {
         product: {

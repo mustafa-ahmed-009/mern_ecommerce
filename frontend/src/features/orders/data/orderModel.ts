@@ -3,6 +3,7 @@ import { CartItem } from "../../cart/data/CartModel";
 export interface OrderModel {
   customerName: string;
   cartItems: CartItem[];
+  customerId: String;
   totalAmount: number;
   status: string;
   shippingAddress: ShippingAddress;

@@ -8,10 +8,10 @@ const AddingBrand = () => {
   return (
     <div>
       <div className="flex justify-between">
-        <h2>اضف ماركة</h2>
+        <h2>Brand Managemnt page</h2>
         <button className="bg-black text-white rounded-2xl p-2" onClick={
          ()=>{setShowAddingDialog(true)}
-        }>اضافة مركة جديدة</button>
+        }>click to add a brand </button>
       </div>
       
       {showAddingDialog && <AddingNewBrandDialog close={() => setShowAddingDialog(false)} />}

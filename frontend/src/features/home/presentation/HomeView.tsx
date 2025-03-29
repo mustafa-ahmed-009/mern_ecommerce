@@ -1,21 +1,44 @@
+// src/views/home/HomeView.tsx
+import React from 'react';
 import HomeViewCategories from "./components/HomeViewCategories";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar"; // Assuming NavBar is intended outside this view's scope usually
+import HeroSlider from './components/HeroSlider';
+import FeaturedProducts from './components/FeaturedProducts';
+import BrandsSlider from './components/BrandsSlider';
+import WelcomeSection from './components/WelcomeSection';
 
 const HomeView = () => {
-
   return (
-    <>
-      <div className="w-[85%]  m-auto p-2">
-        <div className="h-[30vh] bg-blue-300">slider</div>
-        <HomeViewCategories/>
-        <p className="text-center my-2">Welcome to Paddle Palace
-          Located in Portland, Oregon USA, we are the North American Distributor for the major brands of table tennis. Offering premium customer service, we are players and lovers of table tennis, dedicated to elevating the game</p>
-        <p className="text-center my-2">Featured products</p>
+    // Note: NavBar is usually part of a main layout, not directly in HomeView
+    // <NavBar />
+    <div className="w-full max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 py-4"> {/* Use max-width and center */}
 
-        <div className="h-[40vh] bg-blue-300 my-2">featured products </div>
-        <div className="h-[15vh] bg-blue-300 my-2">brands slider</div>
-      </div>
-    </>
+        {/* Hero Slider Section */}
+        <HeroSlider />
+
+        {/* Categories Section */}
+        <HomeViewCategories />
+
+        {/* Welcome Text Section */}
+        <WelcomeSection />
+
+        {/* Featured Products Section */}
+        <section className="my-8 md:my-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800">
+                Featured Products
+            </h2>
+            <FeaturedProducts />
+        </section>
+
+        {/* Brands Slider Section
+         <section className="my-8 md:my-12">
+             <h2 className="text-2xl md:text-3xl font-bold text-center mb-2 text-gray-800">
+                Our Brands
+             </h2>
+            <BrandsSlider />
+         </section> */}
+
+    </div>
   );
 };
 

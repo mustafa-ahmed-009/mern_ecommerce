@@ -34,16 +34,16 @@ const formatDate = (dateString?: string) => {
 
 const OrdersPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { ordersList, loading, error } = useSelector(
+  const { orders, loading, error } = useSelector(
     (state: RootState) => state.orders // Use the correct slice name
   );
-
+const userState= useSelector((state:RootState) =>state.user.user)
   useEffect(() => {
     // Fetch only if the list is empty
-    if (ordersList.length === 0) {
-       dispatch(OrdersService.getAllOrders());
+    if (orders.length === 0) {
+       dispatch(OrdersService.getOrderById(userState!._id));
     }
-  }, [dispatch, ordersList.length]);
+  }, [dispatch, orders.length]);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -53,7 +53,7 @@ const OrdersPage = () => {
     return <ErrorMessage message={error} />;
   }
 
-  if (!ordersList || ordersList.length === 0) {
+  if (!orders || orders.length === 0) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
         <h1 className="text-2xl font-semibold mb-4">My Orders</h1>
@@ -67,7 +67,7 @@ const OrdersPage = () => {
       <h1 className="text-3xl font-bold mb-6 border-b pb-2">My Orders</h1>
       <div className="space-y-6">
         {/* Use order._id as key */}
-        {ordersList.map((order: OrderModel) => (
+        {orders.map((order: OrderModel) => (
           <div key={order._id} className="border rounded-lg shadow-md overflow-hidden bg-white">
             {/* Order Header */}
             <div className="bg-gray-100 p-4 flex flex-wrap justify-between items-center border-b">

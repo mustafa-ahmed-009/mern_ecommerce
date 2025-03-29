@@ -53,6 +53,7 @@ const CheckOutPage = () => {
     if (!selectedAddress?.trim()) toast.error("please choose an address");
     const selectedAddressModel = getTheCurrentAddressData();
     const orderModel: OrderModel = {
+      customerId:userState!._id, 
       customerName: userState!.name.trim(), // Ensure no whitespace
       status: "Pending",
       totalAmount: total!,

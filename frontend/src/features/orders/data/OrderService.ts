@@ -1,21 +1,24 @@
+// src/features/orders/data/OrderService.ts
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosInstance } from "../../../utils/axios";
+import { axiosInstance } from "../../../utils/axios"; // Adjust path if needed
 import { OrderModel } from "./orderModel";
+
+// Define the structure for the update payload
+interface UpdateOrderStatusPayload {
+  orderId: string;
+  status: OrderModel['status']; // Use the specific status type from OrderModel
+}
 
 export const OrdersService = {
   addOrder: createAsyncThunk(
-    "orders/addOrders",
-    async (orderModel: OrderModel, { rejectWithValue }) => {
+    "orders/addOrder", // Corrected type name slightly for consistency
+    async (orderData: Omit<OrderModel, '_id' | 'createdAt' | 'updatedAt' | '__v'>, { rejectWithValue }) => { // More specific input type
       try {
-        const response = await axiosInstance.post("orders", 
-            orderModel,
-        );
-        return response.data;
+        // Assuming API takes order data and returns the created order { data: OrderModel }
+        const response = await axiosInstance.post<{ data: OrderModel }>("orders", orderData);
+        return response.data; // Payload will be { data: OrderModel }
       } catch (error: any) {
-        if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
-        }
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.response?.data?.message || error.response?.data || error.message);
       }
     }
   ),
@@ -24,78 +27,42 @@ export const OrdersService = {
     "orders/getAllOrders",
     async (_, { rejectWithValue }) => {
       try {
-        const response = await axiosInstance.get("orders");
-        return response.data;
+        // Assuming API returns { data: OrderModel[] }
+        const response = await axiosInstance.get<{ data: OrderModel[] }>("orders");
+        return response.data; // Payload will be { data: OrderModel[] }
       } catch (error: any) {
-        if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
-        }
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.response?.data?.message || error.response?.data || error.message);
       }
     }
   ),
 
-  // ✅ Fixing the type order
-  changeProductQuantity: createAsyncThunk<
-    ChangeProductQuantityResponse, // Correct return type
-    changeProdcutQuantityProps // Correct argument type
-  >(
-    "cart/changeProductQuantity",
-    async ({ cartItemId, increase }, { rejectWithValue }) => {
+  // --- Corrected Update Function ---
+  updateOrderStatus: createAsyncThunk(
+    "orders/updateStatus", // *** UNIQUE Action Type Name ***
+    async ({ orderId, status }: UpdateOrderStatusPayload, { rejectWithValue }) => { // *** Accept orderId and status ***
       try {
-        const response = await axiosInstance.put(`cart/${cartItemId}`, {
-          quantity: increase ? 1 :-1,
-        });
-
-        return response.data; // Ensure this matches `ChangeProductQuantityResponse`
+        // Assuming API takes status in body and returns the updated order { data: OrderModel }
+        const response = await axiosInstance.put<{ data: OrderModel }>(
+          `orders/${orderId}`, // *** Use orderId in URL ***
+          { status }          // *** Send status in body ***
+        );
+        return response.data; // Payload will be { data: OrderModel }
       } catch (error: any) {
-        if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
-        }
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.response?.data?.message || error.response?.data || error.message);
       }
     }
   ),
-  removeCartItem: createAsyncThunk(
-    "cart/removeCartItem",
-    async (cartItemId:string, { rejectWithValue }) => {
+  getOrderById: createAsyncThunk(
+    "orders/getORderByIt",
+    async (customerId:String, { rejectWithValue }) => {
       try {
-        const response = await axiosInstance.delete(`cart/${cartItemId}`);
-        return response.data;
+        // Assuming API returns { data: OrderModel[] }
+        const response = await axiosInstance.get<{ data: OrderModel[] }>(`orders/${customerId}`);
+        return response.data; // Payload will be { data: OrderModel[] }
       } catch (error: any) {
-        if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
-        }
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.response?.data?.message || error.response?.data || error.message);
       }
     }
   ),
-  applyCoupon: createAsyncThunk(
-    "cart/applyCoupon",
-    async (coupon:string, { rejectWithValue }) => {
-      try {
-        const response = await axiosInstance.put(`cart/applyCoupon`, {
-          coupon
-        });
-        return response.data;
-      } catch (error: any) {
-        if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
-        }
-        return rejectWithValue(error.message);
-      }
-    }
-  ),
+  // --- Renamed updateAnOrder to updateOrderStatus ---
 };
-
-// ✅ Fixing interface names (typo)
-interface changeProdcutQuantityProps {
-  cartItemId: string;
-  increase: boolean;
-}
-
-// ✅ Make sure ChangeProductQuantityResponse matches API response correctly
-interface ChangeProductQuantityResponse {
-  cartItemId?: string; // If response contains `cartItemId`, define it here
-  data: any; // Replace `any` with actual response type if known
-}

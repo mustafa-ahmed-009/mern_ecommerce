@@ -19,12 +19,16 @@ import AdminProtectedRoutes from "./utils/components/AdminProtectedRoutes";
 import { UserService } from "./features/data/UserService";
 import { ProfilePage } from "./features/profile/presentation/ProfilePage";
 import OrdersPage from "./features/orders/presentation/OrdersPage";
+import { CartService } from "./features/cart/data/CartService";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(UserService.checkAuth());
-  });
+    dispatch(UserService.checkAuth()).then(
+      ()=>   dispatch(CartService.getUserCartItems())
+    );
+ 
+  }, [dispatch]); 
   return (
     <>
       <BrowserRouter>
