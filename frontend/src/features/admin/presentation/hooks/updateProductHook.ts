@@ -116,9 +116,9 @@ const useUpdateProductHook = (product: Product, productsList:Category[]) => {
         formData: formData
       })).unwrap();
   
-      toast.success("تم تحديث المنتج بنجاح");
+      toast.success("product has been successfully updated ");
     } catch (error: any) {
-      toast.error(error.message || "حدث خطأ أثناء التحديث");
+      toast.error(error.message || "there was an error during update");
       console.error("Update error:", error);
     }
   };
@@ -127,7 +127,7 @@ const useUpdateProductHook = (product: Product, productsList:Category[]) => {
 try {
   dispatch(ProductsService.deleteProduct(id)).unwrap(); 
   navigate("/products")
-  toast.success("تم مسح العنصر بنجاح")
+  toast.success("product has been successfully removed ")
 } catch (error:any) {
   toast.error(error); 
 }
