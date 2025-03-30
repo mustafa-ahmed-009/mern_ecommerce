@@ -113,13 +113,13 @@ const EditCategory: React.FC<EditCategoryProps> = ({ category, onClose }) => {
               onClick={onClose}
               className="bg-gray-500 text-white px-4 py-2 rounded-lg"
             >
-              إلغاء
+      cancel
             </button>
             <button
               onClick={handleSubmit}
               className="bg-black text-white px-4 py-2 rounded-lg"
             >
-              حفظ التعديلات
+            save
             </button>
           </div>
         </div>

@@ -19,7 +19,7 @@ const useUpdateProductHook = (product: Product, productsList:Category[]) => {
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverImagePreview, setCoverImagePreview] = useState<string>(product?.imageCover || "");
   const [replacingImageIndex, setReplacingImageIndex] = useState<number | null>(null);
-  const [mainCategory, setMainCategory] = useState(product?.category?.name || ""); 
+  const [mainCategory, setMainCategory] = useState(product?.category?._id || ""); 
   const [additionalImages, setAdditionalImages] = useState<AdditionalImage[]>(
     product?.images?.map(image => ({
       preview: image,

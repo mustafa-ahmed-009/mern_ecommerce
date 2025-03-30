@@ -22,14 +22,16 @@ const router = express.Router();
 
 router.use("/:productId/reviews", reviewRoute);
 
-// router.use(authenticate,
-//   allowedTo("admin","manager"))
 
-router.route('/').get(getProducts).post(uploadProductImages,resizeProductImages,createProductValidator, createProduct);
+
+router.route('/').get(getProducts).post(   authenticate,
+  allowedTo("admin","manager"),uploadProductImages,resizeProductImages,createProductValidator, createProduct);
 router
   .route('/:id')
   .get(getProductValidator, getProduct)
-  .put(uploadProductImages,resizeProductImages,updateProductValidator, updateProduct)
-  .delete(deleteProductValidator, deleteProduct);
+  .put(   authenticate,
+    allowedTo("admin","manager"),uploadProductImages,resizeProductImages,updateProductValidator, updateProduct)
+  .delete(   authenticate,
+    allowedTo("admin","manager"),deleteProductValidator, deleteProduct);
 
 module.exports = router;

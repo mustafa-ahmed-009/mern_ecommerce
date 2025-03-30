@@ -10,7 +10,7 @@ const AddingProductsPage = () => { // Renamed component for clarity
     setProductName,
     productDescription,
     setProductDescription,
-    priceBeforeDiscount,
+    priceAfterDiscount,
     setPriceBeforeDiscount,
     productPrice,
     setProductPrice,
@@ -129,12 +129,12 @@ const AddingProductsPage = () => { // Renamed component for clarity
       {/* --- Price Section (Grouped) --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
-              <label htmlFor="priceBeforeDiscount" className="block text-sm font-medium text-gray-700 mb-1">Price Before Discount (Optional)</label>
+              <label htmlFor="priceBeforeDiscount" className="block text-sm font-medium text-gray-700 mb-1">Price After Discount (Optional)</label>
              <input
                 id="priceBeforeDiscount"
                 type="number" // Use number type for prices
                 placeholder="e.g., 25.00"
-                value={priceBeforeDiscount}
+                value={priceAfterDiscount}
                 min="0" // Add min value
                 step="0.01" // Add step for decimals
                 onChange={(e) => setPriceBeforeDiscount(e.target.value)}

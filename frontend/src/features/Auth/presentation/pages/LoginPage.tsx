@@ -47,10 +47,9 @@ const LoginPage = () => {
       await dispatch(AuthService.login(formData)).unwrap();
       await dispatch(UserService.checkAuth()).unwrap();
       await dispatch(CartService.getUserCartItems()).unwrap();
-
-      // Use English success message
-      toast.success("Logged in successfully");
-      navigate("/"); // Redirect to home page after successful login
+  toast.success("Logged in successfully");
+  navigate("/"); 
+    // Redirect to home page after successful login
     } catch (error: any) {
       // `error` here will be the value passed to rejectWithValue in the thunk
       const errorMessage = error?.message || error || "An error occurred during login";

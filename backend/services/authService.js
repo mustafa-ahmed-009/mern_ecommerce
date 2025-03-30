@@ -67,7 +67,7 @@ exports.authenticate = asyncHandler(async (req, res, next) => {
   if (!token) {
     return next(
       new ApiError(
-        "You are not login, Please login to get access this route",
+        "You are not logged, Please login to get access this route",
         401
       )
     );

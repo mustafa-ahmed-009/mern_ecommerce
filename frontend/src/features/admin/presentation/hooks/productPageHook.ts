@@ -37,7 +37,7 @@ const useProductManagement = () => {
 
   const [productName, setProductName] = useState<string>("");
   const [productDescription, setProductDescription] = useState<string>("");
-  const [priceBeforeDiscount, setPriceBeforeDiscount] = useState<string>("");
+  const [priceAfterDiscount, setPriceBeforeDiscount] = useState<string>("");
   const [productPrice, setProductPrice] = useState<string>("");
   const [mainCategory, setMainCategory] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1); // Quantity field
@@ -167,7 +167,7 @@ const useProductManagement = () => {
       const formData = new FormData();
       formData.append("title", productName);
       formData.append("description", productDescription);
-      formData.append("priceAfterDiscount", priceBeforeDiscount);
+      formData.append("priceAfterDiscount", priceAfterDiscount);
       formData.append("price", productPrice);
       formData.append("quantity", quantity.toString());
       formData.append("category", mainCategory);
@@ -185,7 +185,7 @@ const useProductManagement = () => {
       });
   
       await dispatch(ProductsService.createProduct(formData)).unwrap();
-      toast.success("تم اضافة المنتج بنجاح");
+      toast.success("product has benn succeffully added ");
     } catch (error: any) {
       const errorMessage = error.message || error.response?.data?.message || "حدث خطأ أثناء إضافة المنتج";
       toast.error(errorMessage);
@@ -200,7 +200,7 @@ const useProductManagement = () => {
     setProductName,
     productDescription,
     setProductDescription,
-    priceBeforeDiscount,
+   priceAfterDiscount,
     setPriceBeforeDiscount,
     productPrice,
     setProductPrice,

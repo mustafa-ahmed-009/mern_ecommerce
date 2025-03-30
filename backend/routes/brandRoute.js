@@ -18,8 +18,8 @@ const {
 } = require("../services/brandService");
 
 const router = express.Router();
-// router.use(    authenticate,
-//   allowedTo("admin","manager"),)
+router.use(    authenticate,
+  allowedTo("admin","manager"),)
 router
   .route("/")
   .get(getBrands)

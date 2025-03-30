@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from "../../../../redux/store";
 import { IoAdd } from "react-icons/io5";
 import { MdModeEditOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { CategoriesService } from "../../data/services/CategoriesService";
 
 const ProductManagementPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,6 +14,7 @@ const ProductManagementPage = () => {
 
   useEffect(() => {
     dispatch(ProductsService.fetchAllProducts({ page: 1, limit: 10 }));
+    dispatch(CategoriesService.fetchAllCategories({ page: 1, limit: 10 }));
   }, [dispatch]);
 
   if (loading) return <p>Loading...</p>;
