@@ -65,7 +65,7 @@ const BransList = () => {
           isOpen={!!deletingBrandId} // Open the dialog if deletingBrandId is not null
           onClose={() => setDeletingBrandId(null)} // Close the dialog
           onConfirm={() => handleDelete(deletingBrandId)} // Confirm deletion
-          message="هل أنت متأكد أنك تريد حذف هذا التصنيف؟"
+          message="are you sure that you want to remove this category "
         />
       )}
     </div>

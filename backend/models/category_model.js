@@ -18,22 +18,7 @@ const categorySchema = new mongoose.Schema({
     timestamps: true,
 });
 
-const setImageUrl = (doc) => {
-    // Check if the image field already contains the base URL
-    if (doc.image && !doc.image.startsWith(process.env.BASE_URL)) {
-        const imageUrl = `${process.env.BASE_URL}/categories/${doc.image}`;
-        doc.image = imageUrl;
-    }
-};
 
-// Apply the setImageUrl function after saving or initializing a document
-categorySchema.post('save', function (doc) {
-    setImageUrl(doc);
-});
-
-categorySchema.post('init', function (doc) {
-    setImageUrl(doc);
-});
 
 const CategoryModel = mongoose.model("Category", categorySchema);
 module.exports = CategoryModel;

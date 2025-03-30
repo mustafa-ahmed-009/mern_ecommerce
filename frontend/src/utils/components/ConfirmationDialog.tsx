@@ -24,13 +24,12 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
             onClick={onClose}
             className="bg-gray-500 text-white px-4 py-2 rounded-lg"
           >
-            إلغاء
-          </button>
+           cancel      </button>
           <button
             onClick={onConfirm}
             className="bg-red-500 text-white px-4 py-2 rounded-lg"
           >
-            تأكيد الحذف
+           delete
           </button>
         </div>
       </div>

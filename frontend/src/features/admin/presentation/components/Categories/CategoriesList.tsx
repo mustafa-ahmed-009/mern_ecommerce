@@ -64,7 +64,7 @@ const CategoriesList = () => {
           isOpen={!!deletingCategoryId} // Open the dialog if deletingCategoryId is not null
           onClose={() => setDeletingCategoryId(null)} // Close the dialog
           onConfirm={() => handleDelete(deletingCategoryId)} // Confirm deletion
-          message="هل أنت متأكد أنك تريد حذف هذا التصنيف؟"
+          message="are you sure that you want to delete this category"
         />
       )}
     </div>

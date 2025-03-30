@@ -65,7 +65,7 @@ const useBrands = () => {
   const handleDelete = async (id: string) => {
     try {
       await dispatch(BrandsService.deleteBrand(id)).unwrap();
-      toast.success("تم حذف التصنيف بنجاح");
+      toast.success("brand has been sucessfully removed ");
       dispatch(BrandsService.fetchAllBrands({})); // Refresh the list
     } catch (error) {
       toast.error("فشل في حذف التصنيف");

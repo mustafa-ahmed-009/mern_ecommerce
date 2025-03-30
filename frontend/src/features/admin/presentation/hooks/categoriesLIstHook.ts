@@ -23,7 +23,7 @@ const useCategories = () => {
     const handleDelete = async (id: string) => {
         try {
           await dispatch(CategoriesService.deleteCategory(id)).unwrap();
-          toast.success("تم حذف التصنيف بنجاح");
+          toast.success("category has been sucessfully removed");
           dispatch(CategoriesService.fetchAllCategories({})); // Refresh the list
         } catch (error) {
           toast.error("فشل في حذف التصنيف");

@@ -19,6 +19,7 @@ const EditCategory: React.FC<EditCategoryProps> = ({ category, onClose }) => {
   const [categoryName, setCategoryName] = useState(category.name);
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState(category.image);
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
 
   // Update the form when the category prop changes
   useEffect(() => {
@@ -35,7 +36,6 @@ const EditCategory: React.FC<EditCategoryProps> = ({ category, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    
     if (!categoryName) {
       toast.error("برجاء ادخال اسم التصنيف");
       return;
@@ -47,15 +47,20 @@ const EditCategory: React.FC<EditCategoryProps> = ({ category, onClose }) => {
       formData.append("image", image); // Append the new image if it exists
     }
 
+    setIsLoading(true); // Start loading
+
     dispatch(CategoriesService.updateCategory({ id: category._id, formData }))
       .unwrap()
       .then(() => {
-        toast.success("تم تعديل التصنيف بنجاح");
+        toast.success("category has been successfully modified");
         onClose();
-        dispatch(CategoriesService.fetchAllCategories({})); // Close the dialog after successful update
+        dispatch(CategoriesService.fetchAllCategories({})); // Fetch updated categories
       })
       .catch((error: any) => {
         toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false); // Stop loading
       });
   };
 
@@ -66,10 +71,6 @@ const EditCategory: React.FC<EditCategoryProps> = ({ category, onClose }) => {
     }
   };
 
-  if (state.loading) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
@@ -79,13 +80,11 @@ const EditCategory: React.FC<EditCategoryProps> = ({ category, onClose }) => {
         className="bg-white p-6 rounded-lg w-full max-w-2xl mx-auto"
         onClick={(e) => e.stopPropagation()} // Prevent event bubbling
       >
-        <h2 className="text-xl font-semibold mb-4">تعديل التصنيف</h2>
+        <h2 className="text-xl font-semibold mb-4">Editing the category</h2>
         <div className="bg-gray-100 p-6 rounded-lg flex flex-col gap-4">
           <div className="flex items-center justify-end">
             <label className="flex flex-col items-center justify-center w-32 h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-50">
-              {!imagePreview && (
-                <FiUpload size={24} className="text-gray-400" />
-              )}
+              {!imagePreview && <FiUpload size={24} className="text-gray-400" />}
               {imagePreview && (
                 <img
                   src={imagePreview}
@@ -113,13 +112,14 @@ const EditCategory: React.FC<EditCategoryProps> = ({ category, onClose }) => {
               onClick={onClose}
               className="bg-gray-500 text-white px-4 py-2 rounded-lg"
             >
-      cancel
+              Cancel
             </button>
             <button
               onClick={handleSubmit}
-              className="bg-black text-white px-4 py-2 rounded-lg"
+              className="bg-black text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2"
+              disabled={isLoading} // Disable button when loading
             >
-            save
+              {isLoading ? <LoadingSpinner size={20} color="white" /> : "Save"}
             </button>
           </div>
         </div>

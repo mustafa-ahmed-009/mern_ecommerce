@@ -22,7 +22,7 @@ const AdminDashboard = () => {
           <Route path="products" element={<ProductManagementPage />} />
           <Route path="products/adminproductdetails/:id" element={<AdminProductDetails />} />
           <Route path="orders" element={<OrdersManagement />} />
-          <Route path="add-brand" element={<AddingBarnds />} />
+          {/* <Route path="add-brand" element={<AddingBarnds />} /> */}
           <Route path="add-category" element={<AddingCategory />} />
           <Route path="add-product" element={<AddingProudctsPage />} />
           {/* <Route index element={<YourAdminHomePage />} /> */}

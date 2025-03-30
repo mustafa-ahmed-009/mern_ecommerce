@@ -1,9 +1,17 @@
 import React from "react";
 
-const LoadingSpinner = () => {
+interface LoadingSpinnerProps {
+  size?: number;  // Optional size parameter (default: 32)
+  color?: string; // Optional color parameter (default: black)
+}
+
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 32, color = "black" }) => {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+    <div className="flex justify-center items-center">
+      <div
+        className="animate-spin rounded-full border-b-2"
+        style={{ width: size, height: size, borderColor: color }}
+      ></div>
     </div>
   );
 };
