@@ -38,6 +38,7 @@ class ApiFeatures {
     }
   
     search(modelName) {
+
       if (this.queryString.keyword) {
         let query = {};
         if (modelName === 'Products') {
@@ -45,11 +46,11 @@ class ApiFeatures {
             { title: { $regex: this.queryString.keyword, $options: 'i' } },
             { description: { $regex: this.queryString.keyword, $options: 'i' } },
           ];
-        } else  {
+        } else {
           query = { name: { $regex: this.queryString.keyword, $options: 'i' } };
         }
-  
         this.mongooseQuery = this.mongooseQuery.find(query);
+      } else {
       }
       return this;
     }

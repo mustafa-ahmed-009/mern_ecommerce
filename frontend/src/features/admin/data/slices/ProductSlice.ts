@@ -6,6 +6,7 @@ import { ProductsService } from "../services/ProductService";
 interface ProductsState {
   pageCount: number;
   productsList: Product[];
+  searchedProductList: Product[];
   loading: boolean;
   error: string | null;
   paginationData: PaginationData;
@@ -16,6 +17,7 @@ interface ProductsState {
 
 const initialState: ProductsState = {
   pageCount: 0,
+  searchedProductList:[], 
   productsList: [],
   error: null,
   loading: false,
@@ -47,6 +49,18 @@ export const productsSlice = createSlice({
         state.error = null;
       })
       .addCase(ProductsService.fetchAllProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(ProductsService.searchInProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.searchedProductList = action.payload.data;
+      })
+      .addCase(ProductsService.searchInProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(ProductsService.searchInProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
@@ -114,6 +128,7 @@ export const productsSlice = createSlice({
         state.loadingSingle = false;
         state.errorSingle = action.payload as string;
       });
+    
   },
 });
 

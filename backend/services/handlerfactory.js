@@ -17,6 +17,7 @@ exports.updateOne = (Model) =>
   asyncHandler(async (req, res, next) => {
     const document = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
+      runValidators: true 
     });
 
     if (!document) {
@@ -24,7 +25,6 @@ exports.updateOne = (Model) =>
         new ApiError(`No document for this id ${req.params.id}`, 404)
       );
     }
-    document.save();
     res.status(200).json({ data: document });
   });
 
@@ -61,13 +61,18 @@ exports.getAll = (Model, modelName = "") =>
     }
     // Build query
     const documentsCounts = await Model.countDocuments();
-    const apiFeatures = new ApiFeatures(Model.find(filter), req.query)
-      .paginate(documentsCounts)
-      .filter()
-      .search(modelName)
-      .limitFields()
-      .sort();
 
+    const apiFeatures = new ApiFeatures(Model.find(filter), req.query)
+      // 1. Apply primary filters
+
+      // 2. Apply search keyword filter
+      .search(modelName)
+      // 3. Apply sorting
+      .sort()
+      // 4. Limit fields
+      .limitFields()
+      // 5. Apply pagination to the refined query
+      .paginate(documentsCounts);
     // Execute query
     const { mongooseQuery, paginationResult } = apiFeatures;
     const documents = await mongooseQuery;

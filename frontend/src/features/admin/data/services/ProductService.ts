@@ -25,6 +25,24 @@ export const ProductsService = {
     }
   ),
 
+  searchInProducts: createAsyncThunk(
+    "products/search",
+    async (searchKeyWord:string, { rejectWithValue }) => {
+      try {
+        const response = await axiosInstance.get("products", {
+          params: {
+           keyword:searchKeyWord
+          },
+        });
+        return response.data;
+      } catch (error: any) {
+        if (error.response && error.response.data) {
+          return rejectWithValue(error.response.data.message || error.response.data);
+        }
+        return rejectWithValue(error.message);
+      }
+    }
+  ),
   // Create a new product
   createProduct: createAsyncThunk(
     "products/create",

@@ -55,7 +55,7 @@ const Cart: React.FC = () => {
 
 
   if (cart.loading) {
-    return LoadingSpinner(); 
+    return <LoadingSpinner/>
   }
   if (cart.error) {
     return ErrorMessage({message:cart.error});
