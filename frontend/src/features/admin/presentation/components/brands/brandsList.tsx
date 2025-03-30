@@ -1,7 +1,6 @@
-import React from "react";
-import useBrands from "../../hooks/brandsLIstHook";
-import LoadingSpinner from "../../../../../utils/components/LoadingSpinner";
 import ConfirmationDialog from "../../../../../utils/components/ConfirmationDialog";
+import LoadingSpinner from "../../../../../utils/components/LoadingSpinner";
+import useBrands from "../../hooks/brandsLIstHook";
 import EditBrand from "./EditBrandDilog";
 
 const BransList = () => {
@@ -39,13 +38,13 @@ const BransList = () => {
               onClick={() => setEditingBrand(brand)} // Open the edit dialog
               className="bg-blue-500 text-white px-4 py-2 rounded-lg"
             >
-           edit
+              edit
             </button>
             <button
               onClick={() => setDeletingBrandId(brand._id)} // Open the confirmation dialog
               className="bg-red-500 text-white px-4 py-2 rounded-lg"
             >
-          remove
+              remove
             </button>
           </div>
         </div>

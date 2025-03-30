@@ -1,31 +1,33 @@
 // src/views/home/components/BrandsSlider.tsx
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Slider from 'react-slick';
-import { AppDispatch, RootState } from '../../../../redux/store';
-import { BrandsService } from '../../../admin/data/services/BranderService';
-import LoadingSpinner from '../../../../utils/components/LoadingSpinner';
-import ErrorMessage from '../../../../utils/components/ErroMessage';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Slider from "react-slick";
+import { AppDispatch, RootState } from "../../../../redux/store";
+import { BrandsService } from "../../../admin/data/services/BranderService";
+import LoadingSpinner from "../../../../utils/components/LoadingSpinner";
+import ErrorMessage from "../../../../utils/components/ErroMessage";
 // Adjust path
 
 // Assume a Brand interface exists, e.g.:
 interface Brand {
-    _id: string;
-    name: string;
-    image: string; // Assuming brand logo URL is in 'image' field
+  _id: string;
+  name: string;
+  image: string; // Assuming brand logo URL is in 'image' field
 }
 
 // Assume brandsSlice exists and provides this state structure
 interface BrandsState {
-    brandsList: Brand[];
-    loading: boolean;
-    error: string | null;
+  brandsList: Brand[];
+  loading: boolean;
+  error: string | null;
 }
 
 const BrandsSlider: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   // Adjust 'state.brands' to match your actual slice name in the store
-  const { brandsList, loading, error } = useSelector((state: RootState) => state.brands as BrandsState);
+  const { brandsList, loading, error } = useSelector(
+    (state: RootState) => state.brands as BrandsState,
+  );
 
   useEffect(() => {
     // Fetch brands only if the list is empty
@@ -57,7 +59,7 @@ const BrandsSlider: React.FC = () => {
           slidesToShow: 3,
         },
       },
-       {
+      {
         breakpoint: 480, // Extra small screens
         settings: {
           slidesToShow: 2,
@@ -83,8 +85,10 @@ const BrandsSlider: React.FC = () => {
   }
 
   return (
-    <div className="py-6 my-6 bg-gray-50 rounded-lg px-4"> {/* Added padding and background */}
-       <style>{`
+    <div className="py-6 my-6 bg-gray-50 rounded-lg px-4">
+      {" "}
+      {/* Added padding and background */}
+      <style>{`
         .brand-slide img {
           max-height: 60px; /* Control logo height */
           width: auto; /* Maintain aspect ratio */
@@ -101,12 +105,11 @@ const BrandsSlider: React.FC = () => {
       `}</style>
       <Slider {...settings}>
         {brandsList.map((brand) => (
-          <div key={brand._id} className="px-2 brand-slide"> {/* Add padding between logos */}
+          <div key={brand._id} className="px-2 brand-slide">
+            {" "}
+            {/* Add padding between logos */}
             {/* Assuming brand object has an 'image' property with the logo URL */}
-            <img
-              src={brand.image}
-              alt={`${brand.name} logo`}
-            />
+            <img src={brand.image} alt={`${brand.name} logo`} />
           </div>
         ))}
       </Slider>

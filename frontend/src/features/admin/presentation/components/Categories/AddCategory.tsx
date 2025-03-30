@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'; // Make sure useEffect is imported
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../../../redux/store";
+import React, { useEffect, useState } from "react"; // Make sure useEffect is imported
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../../../redux/store";
 import LoadingSpinner from "../../../../../utils/components/LoadingSpinner";
 import { CategoriesService } from "../../../data/services/CategoriesService";
 // Removed useState import from here as it's already imported above
@@ -13,7 +13,6 @@ interface AddCategoryProps {
 
 const AddCategory: React.FC<AddCategoryProps> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const state = useSelector((state: RootState) => state.categories);
 
   const [categoryName, setCategoryName] = useState("");
   const [image, setImage] = useState<File | null>(null);
@@ -37,7 +36,7 @@ const AddCategory: React.FC<AddCategoryProps> = ({ onClose }) => {
     } else {
       // Handle case where user cancels file selection
       if (imagePreview) {
-         URL.revokeObjectURL(imagePreview);
+        URL.revokeObjectURL(imagePreview);
       }
       setImage(null);
       setImagePreview("");
@@ -78,14 +77,16 @@ const AddCategory: React.FC<AddCategoryProps> = ({ onClose }) => {
       onClose(); // Close the modal
       dispatch(CategoriesService.fetchAllCategories({})); // Refresh the categories list
     } catch (error: any) {
-      const errorMessage = typeof error === 'string' ? error : (error?.message || "Failed to add category. Please try again.");
+      const errorMessage =
+        typeof error === "string"
+          ? error
+          : error?.message || "Failed to add category. Please try again.";
       toast.error(errorMessage);
-       console.error("Failed to create category:", error); // Log the actual error
+      console.error("Failed to create category:", error); // Log the actual error
     }
   };
 
   // ... rest of the component code remains the same ...
-
 
   // Handle overlay click to close the modal
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -98,11 +99,11 @@ const AddCategory: React.FC<AddCategoryProps> = ({ onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmitWrapper = async () => {
-      if (isSubmitting) return; // Prevent double submission
-      setIsSubmitting(true);
-      await handleSubmit(); // Call the actual submit logic
-      setIsSubmitting(false);
-  }
+    if (isSubmitting) return; // Prevent double submission
+    setIsSubmitting(true);
+    await handleSubmit(); // Call the actual submit logic
+    setIsSubmitting(false);
+  };
 
   // Using the global loading state might be okay if it reflects the creation status
   // if (state.loading) {
@@ -118,11 +119,13 @@ const AddCategory: React.FC<AddCategoryProps> = ({ onClose }) => {
         className="bg-white p-6 rounded-lg w-full max-w-md mx-auto shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">Add New Category</h2>
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">
+          Add New Category
+        </h2>
         <div className="space-y-4">
           {/* Image Upload Area */}
           <div className="flex items-center justify-center">
-             <label className="flex flex-col items-center justify-center w-32 h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+            <label className="flex flex-col items-center justify-center w-32 h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
               {imagePreview ? (
                 <img
                   src={imagePreview}
@@ -131,8 +134,8 @@ const AddCategory: React.FC<AddCategoryProps> = ({ onClose }) => {
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center pt-5 pb-6 text-gray-500">
-                   <FiUpload size={24} className="mb-2" />
-                   <p className="text-sm">Upload Image</p>
+                  <FiUpload size={24} className="mb-2" />
+                  <p className="text-sm">Upload Image</p>
                 </div>
               )}
               <input
@@ -172,12 +175,12 @@ const AddCategory: React.FC<AddCategoryProps> = ({ onClose }) => {
               disabled={isSubmitting || !categoryName || !image} // Disable if submitting or form invalid
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? 'Saving...' : 'Save'}
+              {isSubmitting ? "Saving..." : "Save"}
             </button>
           </div>
         </div>
         {/* Optional: show spinner inside modal during submission */}
-        {isSubmitting && <LoadingSpinner/>}
+        {isSubmitting && <LoadingSpinner />}
       </div>
     </div>
   );

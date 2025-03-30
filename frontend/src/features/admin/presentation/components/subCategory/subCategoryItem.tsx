@@ -7,7 +7,11 @@ interface SubCategoryItemProps {
   onDelete: (subCategoryId: string) => void; // Pass the delete function
 }
 
-const SubCategoryItem: React.FC<SubCategoryItemProps> = ({ subCategory, open, onDelete }) => {
+const SubCategoryItem: React.FC<SubCategoryItemProps> = ({
+  subCategory,
+  open,
+  onDelete,
+}) => {
   const handleDelete = () => {
     if (window.confirm("هل أنت متأكد من حذف هذا التصنيف الفرعي؟")) {
       onDelete(subCategory._id); // Call the delete function

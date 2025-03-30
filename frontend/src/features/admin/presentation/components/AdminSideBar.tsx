@@ -27,7 +27,7 @@ const AdminSidebar = () => {
                   isActive
                     ? "bg-primary text-white" // Active: Primary background, white text
                     : "text-gray-900 hover:bg-gray-100" // Default: Dark text, light gray hover bg
-                    // Removed dark mode classes as main bg is white
+                  // Removed dark mode classes as main bg is white
                 }`
               }
             >

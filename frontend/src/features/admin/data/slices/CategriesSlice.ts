@@ -34,7 +34,7 @@ export const categoriesSlice = createSlice({
           state.loading = false;
           state.paginationData = action.payload.paginationResult;
           state.categoriesList = action.payload.data;
-        }
+        },
       )
       .addCase(CategoriesService.fetchAllCategories.pending, (state) => {
         state.loading = true;
@@ -45,7 +45,7 @@ export const categoriesSlice = createSlice({
         (state, action) => {
           state.loading = false;
           state.error = action.payload as string;
-        }
+        },
       )
       .addCase(CategoriesService.createCategory.pending, (state) => {
         state.loading = true;

@@ -1,4 +1,3 @@
-import React from 'react';
 import laptop from "../../../../assets/laptop.png";
 
 const HomeViewDiscountContainer = () => {
@@ -16,7 +15,8 @@ const HomeViewDiscountContainer = () => {
       {/* Right: Text */}
       <div className="w-full md:w-1/2 text-center md:text-right mt-2 md:mt-0">
         <h2 className="text-sm md:text-xl font-bold">
-          خصم يصل حتى <span className="text-yellow-300">30%</span> علي اجهزة اللاب توب
+          خصم يصل حتى <span className="text-yellow-300">30%</span> علي اجهزة
+          اللاب توب
         </h2>
       </div>
     </div>

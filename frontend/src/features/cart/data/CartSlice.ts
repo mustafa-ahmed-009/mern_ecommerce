@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { CartModel } from "./CartModel";
 import { CartService } from "./CartService";
 
-
 interface CartState {
   cart: CartModel | null;
   loading: boolean;
@@ -28,13 +27,13 @@ export const cartSlice = createSlice({
       })
       .addCase(CartService.addAnItemToTheCart.fulfilled, (state, action) => {
         state.loading = false;
-     state.cart!.cartItems =   action.payload.data.cartItems
+        state.cart!.cartItems = action.payload.data.cartItems;
       })
       .addCase(CartService.addAnItemToTheCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
-      
+
       .addCase(CartService.getUserCartItems.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -87,15 +86,14 @@ export const cartSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(CartService.deleteTheWholeCart.fulfilled, (state, ) => {
+      .addCase(CartService.deleteTheWholeCart.fulfilled, (state) => {
         state.loading = false;
         state.cart = null;
       })
       .addCase(CartService.deleteTheWholeCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
-    
+      });
   },
 });
 

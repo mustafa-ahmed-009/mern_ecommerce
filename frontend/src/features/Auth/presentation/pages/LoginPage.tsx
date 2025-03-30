@@ -12,15 +12,15 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -47,12 +47,13 @@ const LoginPage = () => {
       await dispatch(AuthService.login(formData)).unwrap();
       await dispatch(UserService.checkAuth()).unwrap();
       await dispatch(CartService.getUserCartItems()).unwrap();
-  toast.success("Logged in successfully");
-  navigate("/"); 
-    // Redirect to home page after successful login
+      toast.success("Logged in successfully");
+      navigate("/");
+      // Redirect to home page after successful login
     } catch (error: any) {
       // `error` here will be the value passed to rejectWithValue in the thunk
-      const errorMessage = error?.message || error || "An error occurred during login";
+      const errorMessage =
+        error?.message || error || "An error occurred during login";
       // Use English error message
       toast.error(errorMessage);
     } finally {
@@ -101,9 +102,11 @@ const LoginPage = () => {
 
         {/* Use English text */}
         <p className="text-center text-sm mt-3">
-          Don't have an account?{" "}
-          {/* Use English link text */}
-          <Link to="/register" className="text-red-500 font-semibold hover:underline">
+          Don't have an account? {/* Use English link text */}
+          <Link
+            to="/register"
+            className="text-red-500 font-semibold hover:underline"
+          >
             Register here
           </Link>
         </p>

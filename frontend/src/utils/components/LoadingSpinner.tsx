@@ -1,11 +1,14 @@
 import React from "react";
 
 interface LoadingSpinnerProps {
-  size?: number;  // Optional size parameter (default: 32)
+  size?: number; // Optional size parameter (default: 32)
   color?: string; // Optional color parameter (default: black)
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 32, color = "black" }) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  size = 32,
+  color = "black",
+}) => {
   return (
     <div className="flex justify-center items-center">
       <div

@@ -22,11 +22,13 @@ export const AuthService = {
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 
   register: createAsyncThunk(
@@ -37,11 +39,13 @@ export const AuthService = {
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
   checkAuth: createAsyncThunk(
     "auth/checkAuth",
@@ -51,25 +55,25 @@ export const AuthService = {
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
-  logout: createAsyncThunk(
-    "auth/logout",
-    async (_, { rejectWithValue }) => {
-      try {
-        const response = await axiosInstance.get("auth/logout");
-        return response.data;
-      } catch (error: any) {
-        if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
-        }
-        return rejectWithValue(error.message);
+  logout: createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get("auth/logout");
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(
+          error.response.data.message || error.response.data,
+        );
       }
+      return rejectWithValue(error.message);
     }
-  ),
-
+  }),
 };

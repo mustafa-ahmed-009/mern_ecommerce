@@ -1,9 +1,9 @@
 import { FaTimes } from "react-icons/fa";
 import { FaUpload } from "react-icons/fa6";
-import Select from "react-select"; // Assuming you might add this back later
 import useProductManagement from "../hooks/productPageHook";
 
-const AddingProductsPage = () => { // Renamed component for clarity
+const AddingProductsPage = () => {
+  // Renamed component for clarity
   // Use the custom hook
   const {
     productName,
@@ -44,8 +44,12 @@ const AddingProductsPage = () => { // Renamed component for clarity
 
       {/* Cover Image Upload */}
       <div className="mb-6">
-        <p className="text-gray-600 mb-2 font-medium">Cover Image (Main Image)</p>
-        <div className="flex justify-start"> {/* Changed justify-center to justify-start */}
+        <p className="text-gray-600 mb-2 font-medium">
+          Cover Image (Main Image)
+        </p>
+        <div className="flex justify-start">
+          {" "}
+          {/* Changed justify-center to justify-start */}
           {!coverImagePreview ? (
             <label className="cursor-pointer">
               <input
@@ -56,7 +60,9 @@ const AddingProductsPage = () => { // Renamed component for clarity
               />
               <div
                 className={`w-32 h-32 border-2 border-dashed rounded-md ${
-                  formErrors.coverImage ? "border-red-500" : "border-gray-300 hover:border-gray-400"
+                  formErrors.coverImage
+                    ? "border-red-500"
+                    : "border-gray-300 hover:border-gray-400"
                 } flex items-center justify-center text-gray-400 hover:text-gray-500 transition-colors`}
               >
                 <div className="flex flex-col items-center">
@@ -88,9 +94,14 @@ const AddingProductsPage = () => { // Renamed component for clarity
         )}
       </div>
 
-       {/* Product Name */}
+      {/* Product Name */}
       <div className="mb-4">
-         <label htmlFor="productName" className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+        <label
+          htmlFor="productName"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Product Name
+        </label>
         <input
           id="productName"
           type="text"
@@ -108,13 +119,18 @@ const AddingProductsPage = () => { // Renamed component for clarity
 
       {/* Product Description */}
       <div className="mb-4">
-         <label htmlFor="productDescription" className="block text-sm font-medium text-gray-700 mb-1">Product Description</label>
+        <label
+          htmlFor="productDescription"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Product Description
+        </label>
         <textarea
           id="productDescription"
           placeholder="Detailed description of the product..."
           value={productDescription}
           onChange={(e) => setProductDescription(e.target.value)}
-           rows={4} // Added rows for better usability
+          rows={4} // Added rows for better usability
           className={`w-full p-2 border rounded-md focus:ring-primary focus:border-primary ${
             formErrors.productDescription ? "border-red-500" : "border-gray-300"
           }`}
@@ -128,50 +144,70 @@ const AddingProductsPage = () => { // Renamed component for clarity
 
       {/* --- Price Section (Grouped) --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-              <label htmlFor="priceBeforeDiscount" className="block text-sm font-medium text-gray-700 mb-1">Price After Discount (Optional)</label>
-             <input
-                id="priceBeforeDiscount"
-                type="number" // Use number type for prices
-                placeholder="e.g., 25.00"
-                value={priceAfterDiscount}
-                min="0" // Add min value
-                step="0.01" // Add step for decimals
-                onChange={(e) => setPriceBeforeDiscount(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              />
-          </div>
-          <div>
-              <label htmlFor="productPrice" className="block text-sm font-medium text-gray-700 mb-1">Selling Price</label>
-             <input
-                id="productPrice"
-                type="number" // Use number type for prices
-                placeholder="e.g., 19.99"
-                value={productPrice}
-                min="0" // Add min value
-                step="0.01" // Add step for decimals
-                onChange={(e) => setProductPrice(e.target.value)}
-                className={`w-full p-2 border rounded-md focus:ring-primary focus:border-primary ${
-                  formErrors.productPrice ? "border-red-500" : "border-gray-300"
-                }`}
-              />
-              {formErrors.productPrice && (
-                <p className="text-red-500 text-xs mt-1">{formErrors.productPrice}</p>
-              )}
-          </div>
+        <div>
+          <label
+            htmlFor="priceBeforeDiscount"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Price After Discount (Optional)
+          </label>
+          <input
+            id="priceBeforeDiscount"
+            type="number" // Use number type for prices
+            placeholder="e.g., 25.00"
+            value={priceAfterDiscount}
+            min="0" // Add min value
+            step="0.01" // Add step for decimals
+            onChange={(e) => setPriceBeforeDiscount(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="productPrice"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Selling Price
+          </label>
+          <input
+            id="productPrice"
+            type="number" // Use number type for prices
+            placeholder="e.g., 19.99"
+            value={productPrice}
+            min="0" // Add min value
+            step="0.01" // Add step for decimals
+            onChange={(e) => setProductPrice(e.target.value)}
+            className={`w-full p-2 border rounded-md focus:ring-primary focus:border-primary ${
+              formErrors.productPrice ? "border-red-500" : "border-gray-300"
+            }`}
+          />
+          {formErrors.productPrice && (
+            <p className="text-red-500 text-xs mt-1">
+              {formErrors.productPrice}
+            </p>
+          )}
+        </div>
       </div>
-
 
       {/* Quantity Field */}
       <div className="mb-4">
-         <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">Available Quantity</label>
+        <label
+          htmlFor="quantity"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Available Quantity
+        </label>
         <input
           id="quantity"
           type="number"
           placeholder="e.g., 100"
           value={quantity}
           min="0" // Add min value
-          onChange={(e) => setQuantity(Number(e.target.value) >= 0 ? Number(e.target.value) : 0)} // Prevent negative numbers
+          onChange={(e) =>
+            setQuantity(
+              Number(e.target.value) >= 0 ? Number(e.target.value) : 0,
+            )
+          } // Prevent negative numbers
           className={`w-full p-2 border rounded-md focus:ring-primary focus:border-primary ${
             formErrors.quantity ? "border-red-500" : "border-gray-300"
           }`}
@@ -183,38 +219,53 @@ const AddingProductsPage = () => { // Renamed component for clarity
 
       {/* Main Category Dropdown */}
       <div className="mb-4">
-         <label htmlFor="mainCategory" className="block text-sm font-medium text-gray-700 mb-1">Main Category</label>
+        <label
+          htmlFor="mainCategory"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Main Category
+        </label>
         <select
           id="mainCategory"
           value={mainCategory}
           onChange={(e) => setMainCategory(e.target.value)}
-          className={`w-full p-2 border rounded-md focus:ring-primary focus:border-primary bg-white ${ // Added bg-white for consistency
+          className={`w-full p-2 border rounded-md focus:ring-primary focus:border-primary bg-white ${
+            // Added bg-white for consistency
             formErrors.mainCategory ? "border-red-500" : "border-gray-300"
           }`}
         >
-          <option value="" disabled>-- Select a Category --</option> {/* Added default option */}
-          {categoriesList?.map((category) => ( // Added optional chaining
-            <option key={category._id} value={category._id}>{category.name}</option>
-          ))}
+          <option value="" disabled>
+            -- Select a Category --
+          </option>{" "}
+          {/* Added default option */}
+          {categoriesList?.map(
+            (
+              category, // Added optional chaining
+            ) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ),
+          )}
         </select>
-         {formErrors.mainCategory && (
+        {formErrors.mainCategory && (
           <p className="text-red-500 text-xs mt-1">{formErrors.mainCategory}</p>
         )}
       </div>
 
-
-
       {/* Submit Button */}
-       <div className="mt-6 text-left"> {/* Changed alignment */}
-         <button
-            type="button" // Use type="button" if not submitting a <form> element
-            className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-            onClick={handleSubmit}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Saving..." : "Save Product"}
-          </button>
-       </div>
+      <div className="mt-6 text-left">
+        {" "}
+        {/* Changed alignment */}
+        <button
+          type="button" // Use type="button" if not submitting a <form> element
+          className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Saving..." : "Save Product"}
+        </button>
+      </div>
     </div>
   );
 };

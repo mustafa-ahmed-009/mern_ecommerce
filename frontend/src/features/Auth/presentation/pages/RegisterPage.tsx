@@ -14,19 +14,20 @@ const RegisterPage = () => {
     name: "",
     email: "",
     password: "",
-    passwordConfirm: ""
+    passwordConfirm: "",
   });
   const [loading, setLoading] = useState(false); // Added loading state
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => { // Changed to MouseEvent for button onClick
+  const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Changed to MouseEvent for button onClick
     e.preventDefault(); // Prevent default form submission if wrapped in form later
 
     const { name, email, password, passwordConfirm } = formData;
@@ -48,9 +49,10 @@ const RegisterPage = () => {
       toast.error("Please enter a password");
       return;
     }
-    if (password.length < 6) { // Example: Add password length check
-       toast.error("Password must be at least 6 characters long");
-       return;
+    if (password.length < 6) {
+      // Example: Add password length check
+      toast.error("Password must be at least 6 characters long");
+      return;
     }
     if (!passwordConfirm.trim()) {
       toast.error("Please confirm your password");
@@ -64,19 +66,22 @@ const RegisterPage = () => {
     setLoading(true); // Set loading true before dispatch
     try {
       // Use unwrap to catch potential rejections from the thunk
-      await dispatch(AuthService.register({ name, email, password, passwordConfirm })).unwrap();
+      await dispatch(
+        AuthService.register({ name, email, password, passwordConfirm }),
+      ).unwrap();
       // Check auth might be needed depending on whether register logs the user in
       await dispatch(UserService.checkAuth()).unwrap();
-  await dispatch(CartService.getUserCartItems()).unwrap();
+      await dispatch(CartService.getUserCartItems()).unwrap();
       // Use English success message
       toast.success("Registration successful! Please log in."); // Adjusted message
       navigate("/login"); // Redirect to login page after successful registration
     } catch (error: any) {
       // Use English error message
-      const errorMessage = error?.message || error || "Registration failed. Please try again.";
+      const errorMessage =
+        error?.message || error || "Registration failed. Please try again.";
       toast.error(errorMessage);
     } finally {
-       setLoading(false); // Set loading false after operation completes
+      setLoading(false); // Set loading false after operation completes
     }
   };
 
@@ -84,7 +89,9 @@ const RegisterPage = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-sm">
         {/* Use English title */}
-        <h2 className="text-xl font-bold text-center mb-4">Create New Account</h2>
+        <h2 className="text-xl font-bold text-center mb-4">
+          Create New Account
+        </h2>
 
         {/* Consider wrapping inputs in a <form> tag if needed, though onClick handles submission here */}
         <input
@@ -139,9 +146,11 @@ const RegisterPage = () => {
 
         {/* Use English text */}
         <p className="text-center text-sm mt-3">
-          Already have an account?{" "}
-          {/* Use English link text */}
-          <Link to="/login" className="text-red-500 font-semibold hover:underline">
+          Already have an account? {/* Use English link text */}
+          <Link
+            to="/login"
+            className="text-red-500 font-semibold hover:underline"
+          >
             Login here
           </Link>
         </p>

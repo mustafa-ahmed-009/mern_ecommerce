@@ -18,30 +18,34 @@ export const ProductsService = {
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 
   searchInProducts: createAsyncThunk(
     "products/search",
-    async (searchKeyWord:string, { rejectWithValue }) => {
+    async (searchKeyWord: string, { rejectWithValue }) => {
       try {
         const response = await axiosInstance.get("products", {
           params: {
-           keyword:searchKeyWord
+            keyword: searchKeyWord,
           },
         });
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
   // Create a new product
   createProduct: createAsyncThunk(
@@ -56,17 +60,22 @@ export const ProductsService = {
         return response.data; // Return the created product
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 
   // Update a product
   updateProduct: createAsyncThunk(
     "products/update",
-    async ({ id, formData }: { id: string; formData: FormData }, { rejectWithValue }) => {
+    async (
+      { id, formData }: { id: string; formData: FormData },
+      { rejectWithValue },
+    ) => {
       try {
         const response = await axiosInstance.put(`products/${id}`, formData, {
           headers: {
@@ -74,15 +83,17 @@ export const ProductsService = {
           },
         });
         console.log(response);
-        
+
         return response.data; // Return the updated product
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 
   // Delete a product
@@ -94,43 +105,51 @@ export const ProductsService = {
         return id; // Return the deleted product ID
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
   fetchSingleProduct: createAsyncThunk<
-  Product, // Type of the successful return value (the Product object)
-  string,  // Type of the argument passed to the thunk (the product ID)
-  { rejectValue: string } // Type for rejectWithValue payload
->(
-  "products/fetchById", // <<< CORRECTED Action Type Name
-  async (id: string, { rejectWithValue }) => {
+    Product, // Type of the successful return value (the Product object)
+    string, // Type of the argument passed to the thunk (the product ID)
+    { rejectValue: string } // Type for rejectWithValue payload
+  >(
+    "products/fetchById", // <<< CORRECTED Action Type Name
+    async (id: string, { rejectWithValue }) => {
       try {
-          // Make the API call AND get the response
-          const response = await axiosInstance.get<{ data: Product }>(`products/${id}`); // Adjust type based on actual API response structure
+        // Make the API call AND get the response
+        const response = await axiosInstance.get<{ data: Product }>(
+          `products/${id}`,
+        ); // Adjust type based on actual API response structure
 
-          // --- RETURN THE ACTUAL PRODUCT DATA ---
-          // Check common structures: is data nested under a 'data' key?
-          if (response.data && response.data.data) {
-               return response.data.data; // <<< Return the product object
-          }
-          // Or maybe the product is directly in response.data?
-          // else if (response.data) {
-          //    return response.data as Product; // Cast if necessary
-          //}
+        // --- RETURN THE ACTUAL PRODUCT DATA ---
+        // Check common structures: is data nested under a 'data' key?
+        if (response.data && response.data.data) {
+          return response.data.data; // <<< Return the product object
+        }
+        // Or maybe the product is directly in response.data?
+        // else if (response.data) {
+        //    return response.data as Product; // Cast if necessary
+        //}
 
-          // If response structure is unexpected
-          throw new Error("Unexpected API response structure for single product.");
-
+        // If response structure is unexpected
+        throw new Error(
+          "Unexpected API response structure for single product.",
+        );
       } catch (error: any) {
-          const message =
-              (error.response && error.response.data && (error.response.data.message || JSON.stringify(error.response.data))) ||
-              error.message ||
-              error.toString();
-          return rejectWithValue(message);
+        const message =
+          (error.response &&
+            error.response.data &&
+            (error.response.data.message ||
+              JSON.stringify(error.response.data))) ||
+          error.message ||
+          error.toString();
+        return rejectWithValue(message);
       }
-  }
-),
+    },
+  ),
 };

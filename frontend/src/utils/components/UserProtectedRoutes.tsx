@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Outlet, Navigate } from "react-router-dom";
 import { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
 
 const UserProtectedRoutes = () => {
   // const dispatch = useDispatch<AppDispatch>();

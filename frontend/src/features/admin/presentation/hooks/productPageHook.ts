@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { ProductsService } from "../../data/services/ProductService";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../redux/store";
 import { CategoriesService } from "../../data/services/CategoriesService";
-import { BrandsService } from "../../data/services/BranderService";
+import { ProductsService } from "../../data/services/ProductService";
 import { SubCategoriesService } from "../../data/services/SubCategoryService";
 
 // Define types for the form data and images
@@ -20,20 +19,18 @@ interface SubCategoryOption {
 
 const useProductManagement = () => {
   const dispatch = useDispatch<AppDispatch>();
-  useEffect(
-    () => {
-      try {
-        dispatch(CategoriesService.fetchAllCategories({})).unwrap();
-        dispatch(SubCategoriesService.fetchAllSubCategories({})).unwrap()
+  useEffect(() => {
+    try {
+      dispatch(CategoriesService.fetchAllCategories({})).unwrap();
+      dispatch(SubCategoriesService.fetchAllSubCategories({})).unwrap();
+    } catch (error: any) {
+      toast.error(error);
+    }
+  }, []);
 
-   
-      } catch (error: any) {
-        toast.error(error)
-      }
-    }, []
-  )
-
-  const categoriesList = useSelector((state: RootState) => state.categories.categoriesList);
+  const categoriesList = useSelector(
+    (state: RootState) => state.categories.categoriesList,
+  );
 
   const [productName, setProductName] = useState<string>("");
   const [productDescription, setProductDescription] = useState<string>("");
@@ -45,7 +42,9 @@ const useProductManagement = () => {
   // State for images
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverImagePreview, setCoverImagePreview] = useState<string>("");
-  const [additionalImages, setAdditionalImages] = useState<AdditionalImage[]>([]);
+  const [additionalImages, setAdditionalImages] = useState<AdditionalImage[]>(
+    [],
+  );
 
   // State for form errors
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
@@ -66,12 +65,14 @@ const useProductManagement = () => {
   // Handle color selection
   const handleColorSelection = (color: string) => {
     setSelectedColors((prev) =>
-      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
+      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color],
     );
   };
 
   // Handle cover image change
-  const handleCoverImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCoverImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       setCoverImage(file);
@@ -89,7 +90,9 @@ const useProductManagement = () => {
   };
 
   // Handle additional image change
-  const handleAdditionalImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAdditionalImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const preview = URL.createObjectURL(file);
@@ -109,7 +112,7 @@ const useProductManagement = () => {
   const validateForm = () => {
     const errors: { [key: string]: string } = {};
     let isValid = true;
-  
+
     if (!productName.trim()) {
       errors.productName = "اسم المنتج مطلوب";
       isValid = false;
@@ -134,23 +137,20 @@ const useProductManagement = () => {
       errors.coverImage = "صورة الغلاف مطلوبة";
       isValid = false;
     }
-  
+
     setFormErrors(errors);
     return isValid;
   };
-  let myCategoryId = ""
-  const transformCategoryToId = (categoryName:string) => {
+  let myCategoryId = "";
+  const transformCategoryToId = (categoryName: string) => {
     for (let index = 0; index < categoriesList.length; index++) {
       if (categoriesList[index].name === categoryName)
-        myCategoryId = categoriesList[index]._id; 
+        myCategoryId = categoriesList[index]._id;
     }
 
     console.log(myCategoryId);
-    
-  }
+  };
   const subcategoryIds = subCategories.map((subcategory) => subcategory.value);
-
-
 
   // Handle form submission
   const handleSubmit = async () => {
@@ -159,10 +159,10 @@ const useProductManagement = () => {
       toast.error("يرجى ملء جميع الحقول المطلوبة");
       return;
     }
-  
+
     setIsSubmitting(true);
     transformCategoryToId(mainCategory);
-  
+
     try {
       const formData = new FormData();
       formData.append("title", productName);
@@ -171,23 +171,26 @@ const useProductManagement = () => {
       formData.append("price", productPrice);
       formData.append("quantity", quantity.toString());
       formData.append("category", mainCategory);
-  
+
       subcategoryIds.forEach((id) => {
         formData.append("subcategories", id);
       });
-  
+
       if (coverImage) {
         formData.append("imageCover", coverImage);
       }
-  
+
       additionalImages.forEach((img) => {
         formData.append("images", img.file);
       });
-  
+
       await dispatch(ProductsService.createProduct(formData)).unwrap();
       toast.success("product has benn succeffully added ");
     } catch (error: any) {
-      const errorMessage = error.message || error.response?.data?.message || "حدث خطأ أثناء إضافة المنتج";
+      const errorMessage =
+        error.message ||
+        error.response?.data?.message ||
+        "حدث خطأ أثناء إضافة المنتج";
       toast.error(errorMessage);
       console.error("Product creation error:", error);
     } finally {
@@ -200,7 +203,7 @@ const useProductManagement = () => {
     setProductName,
     productDescription,
     setProductDescription,
-   priceAfterDiscount,
+    priceAfterDiscount,
     setPriceBeforeDiscount,
     productPrice,
     setProductPrice,

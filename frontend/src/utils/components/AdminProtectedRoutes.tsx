@@ -11,11 +11,18 @@ const AdminProtectedRoutes = () => {
 
   if (loading) {
     console.log("Admin Route: Still Loading Auth Check...");
-    return ( <div className="flex justify-center items-center h-screen"><LoadingSpinner /></div> );
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (error && !user) {
-    console.error("Admin Route: Auth check failed with error, redirecting to login.", error);
+    console.error(
+      "Admin Route: Auth check failed with error, redirecting to login.",
+      error,
+    );
     return <Navigate to="/login" replace />;
   }
 
@@ -28,9 +35,11 @@ const AdminProtectedRoutes = () => {
   // ---------------------------------
 
   if (!user || user.role !== "admin") {
-    console.log(`Admin Route: Redirecting to '/' because !user (${!user}) or user.role !== 'admin' (${user?.role !== 'admin'})`);
+    console.log(
+      `Admin Route: Redirecting to '/' because !user (${!user}) or user.role !== 'admin' (${user?.role !== "admin"})`,
+    );
     if (user && user.role !== "admin") {
-         toast.error("You do not have permission to access this page.");
+      toast.error("You do not have permission to access this page.");
     }
     return <Navigate to="/" replace />;
   }

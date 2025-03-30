@@ -17,7 +17,7 @@ interface ProductsState {
 
 const initialState: ProductsState = {
   pageCount: 0,
-  searchedProductList:[], 
+  searchedProductList: [],
   productsList: [],
   error: null,
   loading: false,
@@ -88,7 +88,7 @@ export const productsSlice = createSlice({
         state.loading = false;
         const updatedProduct = action.payload;
         const index = state.productsList.findIndex(
-          (product) => product._id === updatedProduct._id
+          (product) => product._id === updatedProduct._id,
         );
         if (index !== -1) {
           state.productsList[index] = updatedProduct; // Update the product in the list
@@ -108,7 +108,7 @@ export const productsSlice = createSlice({
         state.loading = false;
         const deletedProductId = action.payload;
         state.productsList = state.productsList.filter(
-          (product) => product._id !== deletedProductId
+          (product) => product._id !== deletedProductId,
         ); // Remove the deleted product from the list
       })
       .addCase(ProductsService.deleteProduct.rejected, (state, action) => {
@@ -120,15 +120,17 @@ export const productsSlice = createSlice({
         state.errorSingle = null;
         state.currentProduct = null; // Clear previous while loading
       })
-      .addCase(ProductsService.fetchSingleProduct.fulfilled, (state, action) => {
-        state.loadingSingle = false;
-        state.currentProduct = action.payload; // Store the fetched product
-      })
+      .addCase(
+        ProductsService.fetchSingleProduct.fulfilled,
+        (state, action) => {
+          state.loadingSingle = false;
+          state.currentProduct = action.payload; // Store the fetched product
+        },
+      )
       .addCase(ProductsService.fetchSingleProduct.rejected, (state, action) => {
         state.loadingSingle = false;
         state.errorSingle = action.payload as string;
       });
-    
   },
 });
 

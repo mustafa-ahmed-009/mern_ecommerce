@@ -1,24 +1,22 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { Address } from "../../data/AdressModel";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CartService } from "../data/CartService";
 import toast from "react-hot-toast";
 import { OrdersService } from "../../orders/data/OrderService";
 import { OrderModel } from "../../orders/data/orderModel";
 
 const CheckOutPage = () => {
-  const [selectedMethod, setSelectedMethod] = useState("cash");
   const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
   const [promoCode, setPromoCode] = useState("");
   const naviagte = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const location = useLocation();
   // Get user addresses from Redux store
   const userState = useSelector((state: RootState) => state.user.user);
   const userAddresses = useSelector(
-    (state: RootState) => state.user.user?.addresses || []
+    (state: RootState) => state.user.user?.addresses || [],
   );
 
   // Total from previous page (you'll pass this as a prop or get from Redux)
@@ -45,7 +43,7 @@ const CheckOutPage = () => {
   };
   const getTheCurrentAddressData = (): Address => {
     const arr = userState!.addresses.filter(
-      (address) => address._id === selectedAddress
+      (address) => address._id === selectedAddress,
     );
     return arr[0];
   };
@@ -53,7 +51,7 @@ const CheckOutPage = () => {
     if (!selectedAddress?.trim()) toast.error("please choose an address");
     const selectedAddressModel = getTheCurrentAddressData();
     const orderModel: OrderModel = {
-      customerId:userState!._id, 
+      customerId: userState!._id,
       customerName: userState!.name.trim(), // Ensure no whitespace
       status: "Pending",
       totalAmount: total!,
@@ -74,7 +72,7 @@ const CheckOutPage = () => {
       dispatch(OrdersService.addOrder(orderModel)).unwrap();
       toast.success("order has been succeffuly placed");
       dispatch(CartService.deleteTheWholeCart()).unwrap();
-     naviagte("/orders")
+      naviagte("/orders");
     } catch (error: any) {
       toast.error(error);
     }

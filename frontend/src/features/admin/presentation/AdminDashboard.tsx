@@ -1,12 +1,11 @@
 // features/admin/presentation/AdminDashboard.tsx
-import { Routes, Route } from "react-router-dom";
-import OrdersManagement from "./pages/OrdersManagement";
-import AddingBarnds from "./pages/BrandsManagementPage";
-import AddingCategory from "./pages/CategoriesManagementPage";
-import AddingProudctsPage from "./pages/AddingProudctsPage";
-import ProductManagementPage from "./pages/ProductManagementPage";
-import AdminProductDetails from "./pages/AdminProductDetails";
+import { Route, Routes } from "react-router-dom";
 import AdminSidebar from "./components/AdminSideBar";
+import AddingProudctsPage from "./pages/AddingProudctsPage";
+import AdminProductDetails from "./pages/AdminProductDetails";
+import AddingCategory from "./pages/CategoriesManagementPage";
+import OrdersManagement from "./pages/OrdersManagement";
+import ProductManagementPage from "./pages/ProductManagementPage";
 
 const AdminDashboard = () => {
   return (
@@ -14,13 +13,17 @@ const AdminDashboard = () => {
     // Added bg-white explicitly if needed
     <div className="relative min-h-screen bg-white">
       <AdminSidebar /> {/* Sidebar is fixed, outside the normal flow */}
-
       {/* Main Content Area */}
-      <div className="ml-64 p-6"> {/* Adjust padding as needed */}
+      <div className="ml-64 p-6">
+        {" "}
+        {/* Adjust padding as needed */}
         <Routes>
           {/* Routes remain the same */}
           <Route path="products" element={<ProductManagementPage />} />
-          <Route path="products/adminproductdetails/:id" element={<AdminProductDetails />} />
+          <Route
+            path="products/adminproductdetails/:id"
+            element={<AdminProductDetails />}
+          />
           <Route path="orders" element={<OrdersManagement />} />
           {/* <Route path="add-brand" element={<AddingBarnds />} /> */}
           <Route path="add-category" element={<AddingCategory />} />

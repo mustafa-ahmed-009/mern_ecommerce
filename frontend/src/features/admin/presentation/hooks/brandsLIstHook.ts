@@ -7,7 +7,9 @@ import toast from "react-hot-toast";
 
 const useBrands = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { brandsList, loading, error } = useSelector((state: RootState) => state.brands);
+  const { brandsList, loading, error } = useSelector(
+    (state: RootState) => state.brands,
+  );
 
   const [editingBrand, setEditingBrand] = useState<Brand | null>(null);
   const [deletingBrandId, setDeletingBrandId] = useState<string | null>(null);

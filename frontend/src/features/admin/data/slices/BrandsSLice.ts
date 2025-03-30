@@ -68,17 +68,12 @@ export const brandSLice = createSlice({
         state.loading = false;
         // Update the brand in the list
         const updatedBrand = action.payload;
-        state.brandsList = state.brandsList.map((brand) =>
-        {
+        state.brandsList = state.brandsList.map((brand) => {
           console.log(updatedBrand._id);
           console.log(brand._id);
 
-          
-          
-          
-        return  brand._id === updatedBrand._id ? updatedBrand : brand
-   }
-        );
+          return brand._id === updatedBrand._id ? updatedBrand : brand;
+        });
       })
       .addCase(BrandsService.update.rejected, (state, action) => {
         state.loading = false;
@@ -95,7 +90,7 @@ export const brandSLice = createSlice({
         // Remove the deleted brand from the list
         const deletedBrandId = action.payload;
         state.brandsList = state.brandsList.filter(
-          (brand) => brand._id !== deletedBrandId
+          (brand) => brand._id !== deletedBrandId,
         );
       })
       .addCase(BrandsService.deleteBrand.rejected, (state, action) => {

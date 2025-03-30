@@ -6,7 +6,9 @@ interface AddingNewBrandDialogProps {
   close: () => void;
 }
 
-const AddingNewBrandDialog: React.FC<AddingNewBrandDialogProps> = ({ close }) => {
+const AddingNewBrandDialog: React.FC<AddingNewBrandDialogProps> = ({
+  close,
+}) => {
   const {
     previewImage,
     brandName,

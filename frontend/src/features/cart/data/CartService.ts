@@ -1,4 +1,3 @@
-import { CartItem } from "./CartModel";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../../utils/axios";
 
@@ -11,15 +10,17 @@ export const CartService = {
           productId,
         });
         console.log(response.data);
-        
+
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 
   getUserCartItems: createAsyncThunk(
@@ -27,15 +28,17 @@ export const CartService = {
     async (_, { rejectWithValue }) => {
       try {
         const response = await axiosInstance.get("cart");
-      
+
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 
   // ✅ Fixing the type order
@@ -47,60 +50,68 @@ export const CartService = {
     async ({ cartItemId, increase }, { rejectWithValue }) => {
       try {
         const response = await axiosInstance.put(`cart/${cartItemId}`, {
-          quantity: increase ? 1 :-1,
+          quantity: increase ? 1 : -1,
         });
 
         return response.data; // Ensure this matches `ChangeProductQuantityResponse`
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
   removeCartItem: createAsyncThunk(
     "cart/removeCartItem",
-    async (cartItemId:string, { rejectWithValue }) => {
+    async (cartItemId: string, { rejectWithValue }) => {
       try {
         const response = await axiosInstance.delete(`cart/${cartItemId}`);
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
   applyCoupon: createAsyncThunk(
     "cart/applyCoupon",
-    async (coupon:string, { rejectWithValue }) => {
+    async (coupon: string, { rejectWithValue }) => {
       try {
         const response = await axiosInstance.put(`cart/applyCoupon`, {
-          coupon
+          coupon,
         });
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
   deleteTheWholeCart: createAsyncThunk(
     "cart/deleteTheWholeCart",
     async (_, { rejectWithValue }) => {
       try {
-      await axiosInstance.delete(`cart`);
+        await axiosInstance.delete(`cart`);
       } catch (error: any) {
         if (error.response && error.response.data) {
-          return rejectWithValue(error.response.data.message || error.response.data);
+          return rejectWithValue(
+            error.response.data.message || error.response.data,
+          );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 };
 

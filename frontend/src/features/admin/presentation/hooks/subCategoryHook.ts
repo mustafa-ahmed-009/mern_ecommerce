@@ -6,14 +6,14 @@ import { SubCategoriesService } from "../../data/services/SubCategoryService";
 import toast from "react-hot-toast";
 
 const useSubCategory = () => {
-    const [editingSubCategory, setEditingSubCategory] = useState(false);
-  
+  const [editingSubCategory, setEditingSubCategory] = useState(false);
+
   const dispatch = useDispatch<AppDispatch>();
   const categories = useSelector(
-    (state: RootState) => state.categories.categoriesList
+    (state: RootState) => state.categories.categoriesList,
   );
   const subCategories = useSelector(
-    (state: RootState) => state.subCategories.subCategoriesList
+    (state: RootState) => state.subCategories.subCategoriesList,
   );
   const [subCategoryName, setSubCategoryName] = useState("");
   const [categoryName, setCategoryName] = useState("");
@@ -37,10 +37,7 @@ const useSubCategory = () => {
       }
     }
   };
-  const createNewCategory = async (
-    subCategoryName: string,
-    category: string
-  ) => {
+  const createNewCategory = async (subCategoryName: string) => {
     if (!subCategoryName?.trim() || !categoryName?.trim()) {
       toast.error("برجاء كتابة اسم الصنف واختيار الصنف الفرعي");
       return; // Stop further execution if fields are empty
@@ -51,7 +48,7 @@ const useSubCategory = () => {
         SubCategoriesService.createSubCategory({
           name: subCategoryName,
           category: rightCategoryId,
-        })
+        }),
       ).unwrap(); // Use .unwrap() to handle errors
       toast.success("Subcategory created successfully!");
     } catch (error: any) {
@@ -60,15 +57,25 @@ const useSubCategory = () => {
   };
   const deleteSubCategory = async (subCategoryId: string) => {
     try {
-      await dispatch(SubCategoriesService.deleteSubCategory(subCategoryId)).unwrap();
+      await dispatch(
+        SubCategoriesService.deleteSubCategory(subCategoryId),
+      ).unwrap();
     } catch (error) {
       throw error;
     }
   };
 
-  const updateSubCategory = async ({ id, name }: { id: string; name: string }) => {
+  const updateSubCategory = async ({
+    id,
+    name,
+  }: {
+    id: string;
+    name: string;
+  }) => {
     try {
-      await dispatch(SubCategoriesService.updateSubCategory({ id, name })).unwrap();
+      await dispatch(
+        SubCategoriesService.updateSubCategory({ id, name }),
+      ).unwrap();
     } catch (error) {
       throw error;
     }
@@ -85,7 +92,7 @@ const useSubCategory = () => {
     editingSubCategory,
     setEditingSubCategory,
     deleteSubCategory,
-    updateSubCategory
+    updateSubCategory,
     // Return subcategories for display
   };
 };

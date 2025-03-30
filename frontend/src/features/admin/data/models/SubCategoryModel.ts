@@ -1,9 +1,8 @@
 export interface SubCategoryModel {
-    _id: string
-    name: string
-    slug: string
-    category: string
-    createdAt: string
-    updatedAt: string
-  }
-  
+  _id: string;
+  name: string;
+  slug: string;
+  category: string;
+  createdAt: string;
+  updatedAt: string;
+}

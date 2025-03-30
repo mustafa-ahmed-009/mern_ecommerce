@@ -1,11 +1,11 @@
-export interface Category { 
-    _id: string
-    name: string
-    slug: string
-    image:string
-    createdAt: string
-    updatedAt: string 
-    category?: {
-        name:string
-    }
+export interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+  category?: {
+    name: string;
+  };
 }

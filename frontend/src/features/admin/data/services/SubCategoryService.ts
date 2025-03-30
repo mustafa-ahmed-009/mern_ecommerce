@@ -19,12 +19,12 @@ export const SubCategoriesService = {
         // Extract the error message from the response data
         if (error.response && error.response.data) {
           return rejectWithValue(
-            error.response.data.message || error.response.data
+            error.response.data.message || error.response.data,
           );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 
   // Create a new subcategory
@@ -32,7 +32,7 @@ export const SubCategoriesService = {
     "subCategories/create",
     async (
       subCategoryData: { name: string; category: string },
-      { rejectWithValue }
+      { rejectWithValue },
     ) => {
       try {
         const response = await axiosInstance.post(
@@ -42,19 +42,19 @@ export const SubCategoriesService = {
             headers: {
               "Content-Type": "application/json", // JSON content type
             },
-          }
+          },
         );
         return response.data; // Return the created subcategory
       } catch (error: any) {
         // Extract the error message from the response data
         if (error.response && error.response.data) {
           return rejectWithValue(
-            error.response.data.message || error.response.data
+            error.response.data.message || error.response.data,
           );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 
   // Delete a subcategory
@@ -67,12 +67,12 @@ export const SubCategoriesService = {
       } catch (error: any) {
         if (error.response && error.response.data) {
           return rejectWithValue(
-            error.response.data.message || error.response.data
+            error.response.data.message || error.response.data,
           );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 
   // Update a subcategory
@@ -87,17 +87,17 @@ export const SubCategoriesService = {
             headers: {
               "Content-Type": "application/json", // JSON content type
             },
-          }
+          },
         );
         return response.data; // Return the updated subcategory
       } catch (error: any) {
         if (error.response && error.response.data) {
           return rejectWithValue(
-            error.response.data.message || error.response.data
+            error.response.data.message || error.response.data,
           );
         }
         return rejectWithValue(error.message);
       }
-    }
+    },
   ),
 };

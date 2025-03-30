@@ -1,11 +1,9 @@
-import { useParams, useLocation } from "react-router-dom";
-import { FaTimes, FaUpload } from "react-icons/fa";
-import useUpdateProductHook from "../hooks/updateProductHook";
 import { FiUpload } from "react-icons/fi";
+import { useLocation } from "react-router-dom";
 import LoadingSpinner from "../../../../utils/components/LoadingSpinner";
+import useUpdateProductHook from "../hooks/updateProductHook";
 
 const AdminProductDetails = () => {
-  const { id } = useParams();
   const location = useLocation();
   const product = location.state?.product;
   const products = location.state?.productsList;
@@ -13,25 +11,32 @@ const AdminProductDetails = () => {
   console.log("Product data received:", product);
 
   const {
-    productName, setProductName,
-    productDescription, setProductDescription,
-    priceAfterDiscount, setPriceAfterDiscount,
-    productPrice, setProductPrice,
-    quantity, setQuantity,
-    additionalImages,
-    setReplacingImageIndex,
+    productName,
+    setProductName,
+    productDescription,
+    setProductDescription,
+    priceAfterDiscount,
+    setPriceAfterDiscount,
+    productPrice,
+    setProductPrice,
+    quantity,
+    setQuantity,
     handleUpdate,
     coverImagePreview,
-    handleAdditionalImageChange,
     handleCoverImageChange,
     categoriesList,
     handelDelete,
-    mainCategory, setMainCategory,
+    mainCategory,
+    setMainCategory,
     isLoading, // Loading state for update operation
   } = useUpdateProductHook(product, products);
 
   if (!product) {
-    return <div className="text-center p-6">Product data not found. Please go back and select a product.</div>;
+    return (
+      <div className="text-center p-6">
+        Product data not found. Please go back and select a product.
+      </div>
+    );
   }
 
   return (
@@ -43,52 +48,125 @@ const AdminProductDetails = () => {
         <label className="block text-gray-700 mb-2">Cover Image</label>
         <div className="flex items-center justify-center">
           <label className="flex flex-col items-center justify-center w-32 h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
-            {!coverImagePreview && <FiUpload size={24} className="text-gray-400" />}
-            {coverImagePreview && (
-              <img src={coverImagePreview} alt="Cover Preview" className="w-full h-full object-cover rounded-lg" />
+            {!coverImagePreview && (
+              <FiUpload size={24} className="text-gray-400" />
             )}
-            <input type="file" className="hidden" onChange={handleCoverImageChange} accept="image/*" />
+            {coverImagePreview && (
+              <img
+                src={coverImagePreview}
+                alt="Cover Preview"
+                className="w-full h-full object-cover rounded-lg"
+              />
+            )}
+            <input
+              type="file"
+              className="hidden"
+              onChange={handleCoverImageChange}
+              accept="image/*"
+            />
           </label>
         </div>
       </div>
 
       {/* Product Name */}
       <div className="mb-4">
-        <label htmlFor="productName" className="block text-gray-700 mb-1">Product Name</label>
-        <input id="productName" type="text" value={productName} onChange={(e) => setProductName(e.target.value)} className="w-full p-2 border border-gray-300 rounded" />
+        <label htmlFor="productName" className="block text-gray-700 mb-1">
+          Product Name
+        </label>
+        <input
+          id="productName"
+          type="text"
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
       </div>
 
       {/* Product Description */}
       <div className="mb-4">
-        <label htmlFor="productDescription" className="block text-gray-700 mb-1">Product Description</label>
-        <textarea id="productDescription" value={productDescription} onChange={(e) => setProductDescription(e.target.value)} className="w-full p-2 border border-gray-300 rounded" rows={4} />
+        <label
+          htmlFor="productDescription"
+          className="block text-gray-700 mb-1"
+        >
+          Product Description
+        </label>
+        <textarea
+          id="productDescription"
+          value={productDescription}
+          onChange={(e) => setProductDescription(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+          rows={4}
+        />
       </div>
 
       {/* Price Before Discount */}
       <div className="mb-4">
-        <label htmlFor="productPrice" className="block text-gray-700 mb-1">Price Before Discount</label>
-        <input id="productPrice" type="number" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} className="w-full p-2 border border-gray-300 rounded" step="0.01" min="0" />
+        <label htmlFor="productPrice" className="block text-gray-700 mb-1">
+          Price Before Discount
+        </label>
+        <input
+          id="productPrice"
+          type="number"
+          value={productPrice}
+          onChange={(e) => setProductPrice(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+          step="0.01"
+          min="0"
+        />
       </div>
 
       {/* Price After Discount */}
       <div className="mb-4">
-        <label htmlFor="priceAfterDiscount" className="block text-gray-700 mb-1">Price After Discount</label>
-        <input id="priceAfterDiscount" type="number" value={priceAfterDiscount} onChange={(e) => setPriceAfterDiscount(e.target.value)} className="w-full p-2 border border-gray-300 rounded" step="0.01" min="0" />
+        <label
+          htmlFor="priceAfterDiscount"
+          className="block text-gray-700 mb-1"
+        >
+          Price After Discount
+        </label>
+        <input
+          id="priceAfterDiscount"
+          type="number"
+          value={priceAfterDiscount}
+          onChange={(e) => setPriceAfterDiscount(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+          step="0.01"
+          min="0"
+        />
       </div>
 
       {/* Quantity */}
       <div className="mb-4">
-        <label htmlFor="quantity" className="block text-gray-700 mb-1">Quantity</label>
-        <input id="quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="w-full p-2 border border-gray-300 rounded" min="0" />
+        <label htmlFor="quantity" className="block text-gray-700 mb-1">
+          Quantity
+        </label>
+        <input
+          id="quantity"
+          type="number"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+          min="0"
+        />
       </div>
 
       {/* Category Selection */}
       <div className="mb-6">
-        <label htmlFor="mainCategory" className="block text-gray-700 mb-1">Category</label>
-        <select id="mainCategory" value={mainCategory || ""} onChange={(e) => setMainCategory(e.target.value)} className="w-full p-2 border border-gray-300 rounded bg-white">
-          <option value="" disabled>Select Category</option>
+        <label htmlFor="mainCategory" className="block text-gray-700 mb-1">
+          Category
+        </label>
+        <select
+          id="mainCategory"
+          value={mainCategory || ""}
+          onChange={(e) => setMainCategory(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded bg-white"
+        >
+          <option value="" disabled>
+            Select Category
+          </option>
           {categoriesList?.map((category) => (
-            <option key={category._id} value={category._id}>{category.name}</option>
+            <option key={category._id} value={category._id}>
+              {category.name}
+            </option>
           ))}
         </select>
       </div>
@@ -96,16 +174,20 @@ const AdminProductDetails = () => {
       {/* Action Buttons */}
       <div className="flex gap-3 justify-end">
         {/* Update Button with Loading Indicator */}
-        <button 
+        <button
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition duration-200 flex items-center justify-center min-w-[120px]"
           onClick={handleUpdate}
           disabled={isLoading}
         >
-          {isLoading ? <LoadingSpinner size={20} color="white" /> : "Save Changes"}
+          {isLoading ? (
+            <LoadingSpinner size={20} color="white" />
+          ) : (
+            "Save Changes"
+          )}
         </button>
 
         {/* Delete Button */}
-        <button 
+        <button
           className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition duration-200"
           onClick={() => handelDelete(product._id)}
         >

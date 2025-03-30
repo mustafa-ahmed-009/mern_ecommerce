@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";  // Add useState
-import { FiUpload } from "react-icons/fi";
+import { useState } from "react"; // Add useState
 import toast from "react-hot-toast";
-import LoadingSpinner from "../../../../../utils/components/LoadingSpinner";
-import { Brand } from "../../../data/models/BrandModel";
+import { FiUpload } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../redux/store";
+import LoadingSpinner from "../../../../../utils/components/LoadingSpinner";
+import { Brand } from "../../../data/models/BrandModel";
 import { BrandsService } from "../../../data/services/BranderService";
 
 interface EditBrandProps {
@@ -17,7 +17,7 @@ const EditBrand: React.FC<EditBrandProps> = ({ brand, onClose }) => {
   const [brandName, setBrandName] = useState(brand.name);
   const [image, setImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState(brand.image);
-  
+
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.brands);
 
@@ -46,7 +46,7 @@ const EditBrand: React.FC<EditBrandProps> = ({ brand, onClose }) => {
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-    
+
     dispatch(BrandsService.update({ id: brand._id, formData }))
       .unwrap()
       .then(() => {

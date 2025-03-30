@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserModel } from "./UserModel";
 import { AuthService } from "./AuthService";
 
 interface AuthState {
@@ -29,37 +28,37 @@ export const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(AuthService.login.fulfilled, (state, action) => {
+      .addCase(AuthService.login.fulfilled, (state) => {
         state.loading = false;
-     
+
         state.isAuthenticated = true;
       })
       .addCase(AuthService.login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
-      
+
       // Register cases
       .addCase(AuthService.register.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(AuthService.register.fulfilled, (state, action) => {
+      .addCase(AuthService.register.fulfilled, (state) => {
         state.loading = false;
-   
+
         state.isAuthenticated = true;
       })
       .addCase(AuthService.register.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
-      
+
       // Check Auth cases
       .addCase(AuthService.checkAuth.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(AuthService.checkAuth.fulfilled, (state, action) => {
+      .addCase(AuthService.checkAuth.fulfilled, (state) => {
         state.loading = false;
         state.isAuthenticated = true;
       })

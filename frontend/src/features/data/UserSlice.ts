@@ -18,7 +18,7 @@ const initialState: UserState = {
   error: null,
   loading: true, // Initial loading for checkAuth might be true if run immediately
   isAuthenticated: false, // <-- Initialized
-  detailedWishList: [],   // Initialize as empty array
+  detailedWishList: [], // Initialize as empty array
 };
 
 export const userSlice = createSlice({
@@ -48,12 +48,15 @@ export const userSlice = createSlice({
         // Let's clear user for consistency if check requires loading
         // state.user = null; // Optional: clear user during re-check?
       })
-      .addCase(UserService.checkAuth.fulfilled, (state, action: PayloadAction<UserModel>) => {
-        state.loading = false;
-        state.error = null;
-        state.user = action.payload; // <-- Correctly sets user
-        state.isAuthenticated = true; // <-- Set authenticated
-      })
+      .addCase(
+        UserService.checkAuth.fulfilled,
+        (state, action: PayloadAction<UserModel>) => {
+          state.loading = false;
+          state.error = null;
+          state.user = action.payload; // <-- Correctly sets user
+          state.isAuthenticated = true; // <-- Set authenticated
+        },
+      )
       .addCase(UserService.checkAuth.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -69,14 +72,17 @@ export const userSlice = createSlice({
         state.isAuthenticated = false;
       })
       // Adjust payload type based on what AuthService.login returns (e.g., { user: UserModel, token: string })
-      .addCase(AuthService.login.fulfilled, (state, action: PayloadAction<{ user: UserModel, token: string }>) => {
-        state.loading = false;
-        state.error = null;
-        state.user = action.payload.user; // <-- Store user from login payload
-        state.isAuthenticated = true; // <-- Set authenticated
-        // Store token (example)
-        localStorage.setItem("authToken", action.payload.token);
-      })
+      .addCase(
+        AuthService.login.fulfilled,
+        (state, action: PayloadAction<{ user: UserModel; token: string }>) => {
+          state.loading = false;
+          state.error = null;
+          state.user = action.payload.user; // <-- Store user from login payload
+          state.isAuthenticated = true; // <-- Set authenticated
+          // Store token (example)
+          localStorage.setItem("authToken", action.payload.token);
+        },
+      )
       .addCase(AuthService.login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -86,32 +92,31 @@ export const userSlice = createSlice({
 
       // --- Logout cases (if using async thunk) ---
       .addCase(AuthService.logout.pending, (state) => {
-         state.loading = true;
+        state.loading = true;
       })
       .addCase(AuthService.logout.fulfilled, (state) => {
-         // Use the synchronous reducer logic for consistency
-         userSlice.caseReducers.logoutUser(state);
+        // Use the synchronous reducer logic for consistency
+        userSlice.caseReducers.logoutUser(state);
       })
       .addCase(AuthService.logout.rejected, (state, action) => {
-          // Still log out frontend even if API fails
-         userSlice.caseReducers.logoutUser(state);
-         state.error = action.payload as string; // Keep the error message
+        // Still log out frontend even if API fails
+        userSlice.caseReducers.logoutUser(state);
+        state.error = action.payload as string; // Keep the error message
       })
 
       // --- Register cases --- (Often don't log user in automatically)
       .addCase(AuthService.register.pending, (state) => {
-         state.loading = true;
-         state.error = null;
+        state.loading = true;
+        state.error = null;
       })
       .addCase(AuthService.register.fulfilled, (state) => {
-         state.loading = false;
-         // Usually no change to user/isAuthenticated state here
+        state.loading = false;
+        // Usually no change to user/isAuthenticated state here
       })
       .addCase(AuthService.register.rejected, (state, action) => {
-         state.loading = false;
-         state.error = action.payload as string;
+        state.loading = false;
+        state.error = action.payload as string;
       })
-
 
       // --- Wishlist ---
       .addCase(UserService.addPrdouctToWishList.pending, (state) => {
@@ -120,17 +125,20 @@ export const userSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(UserService.addPrdouctToWishList.fulfilled, (state, action: PayloadAction<string>) => {
-        state.loading = false;
-        if (state.user && action.payload) {
-          const productId = action.payload;
-          // Ensure wishlist array exists
-          if (!state.user.wishlist) state.user.wishlist = [];
-          if (!state.user.wishlist.includes(productId)) {
-            state.user.wishlist.push(productId);
+      .addCase(
+        UserService.addPrdouctToWishList.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.loading = false;
+          if (state.user && action.payload) {
+            const productId = action.payload;
+            // Ensure wishlist array exists
+            if (!state.user.wishlist) state.user.wishlist = [];
+            if (!state.user.wishlist.includes(productId)) {
+              state.user.wishlist.push(productId);
+            }
           }
-        }
-      })
+        },
+      )
       .addCase(UserService.addPrdouctToWishList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -141,10 +149,13 @@ export const userSlice = createSlice({
         state.error = null;
       })
       // Adjust payload type if API response structure is different
-      .addCase(UserService.getAllWishListProducts.fulfilled, (state, action: PayloadAction<{ data: Product[] }>) => {
-        state.loading = false;
-        state.detailedWishList = action.payload.data;
-      })
+      .addCase(
+        UserService.getAllWishListProducts.fulfilled,
+        (state, action: PayloadAction<{ data: Product[] }>) => {
+          state.loading = false;
+          state.detailedWishList = action.payload.data;
+        },
+      )
       .addCase(UserService.getAllWishListProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -155,25 +166,31 @@ export const userSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-       // Assuming payload is the removed productId (string)
-      .addCase(UserService.removeProductFromWishList.fulfilled, (state, action: PayloadAction<string>) => {
-        state.loading = false;
-        const productIdToRemove = action.payload;
-        if (state.user?.wishlist) {
-          state.user.wishlist = state.user.wishlist.filter(
-            (wishListId) => wishListId !== productIdToRemove
-          );
-        }
-        if (state.detailedWishList) {
-          state.detailedWishList = state.detailedWishList.filter(
-            (product) => product._id !== productIdToRemove
-          );
-        }
-      })
-      .addCase(UserService.removeProductFromWishList.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
+      // Assuming payload is the removed productId (string)
+      .addCase(
+        UserService.removeProductFromWishList.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.loading = false;
+          const productIdToRemove = action.payload;
+          if (state.user?.wishlist) {
+            state.user.wishlist = state.user.wishlist.filter(
+              (wishListId) => wishListId !== productIdToRemove,
+            );
+          }
+          if (state.detailedWishList) {
+            state.detailedWishList = state.detailedWishList.filter(
+              (product) => product._id !== productIdToRemove,
+            );
+          }
+        },
+      )
+      .addCase(
+        UserService.removeProductFromWishList.rejected,
+        (state, action) => {
+          state.loading = false;
+          state.error = action.payload as string;
+        },
+      )
 
       // --- Addresses ---
       .addCase(UserService.addingNewAddress.pending, (state) => {
@@ -181,18 +198,21 @@ export const userSlice = createSlice({
         state.error = null;
       })
       // Assuming payload is { data: AddressModel }
-      .addCase(UserService.addingNewAddress.fulfilled, (state, action: PayloadAction<{ data: Address }>) => {
-        state.loading = false;
-        if (state.user && action.payload?.data) {
-           // Ensure addresses array exists
-          if (!state.user.addresses) state.user.addresses = [];
-          // Push using Immer's mutation style
-          state.user.addresses.push(action.payload.data);
-        }
-      })
+      .addCase(
+        UserService.addingNewAddress.fulfilled,
+        (state, action: PayloadAction<{ data: Address }>) => {
+          state.loading = false;
+          if (state.user && action.payload?.data) {
+            // Ensure addresses array exists
+            if (!state.user.addresses) state.user.addresses = [];
+            // Push using Immer's mutation style
+            state.user.addresses.push(action.payload.data);
+          }
+        },
+      )
       .addCase(UserService.addingNewAddress.rejected, (state, action) => {
-         state.loading = false;
-         state.error = action.payload as string;
+        state.loading = false;
+        state.error = action.payload as string;
       })
 
       .addCase(UserService.removeAnAddress.pending, (state) => {
@@ -200,16 +220,19 @@ export const userSlice = createSlice({
         state.error = null;
       })
       // Assuming payload is the ID of the removed address (string)
-      .addCase(UserService.removeAnAddress.fulfilled, (state, action: PayloadAction<string>) => {
-        state.loading = false;
-        const addressIdToRemove = action.payload;
-        if (state.user?.addresses) {
+      .addCase(
+        UserService.removeAnAddress.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.loading = false;
+          const addressIdToRemove = action.payload;
+          if (state.user?.addresses) {
             // Filter out the removed address
-             state.user.addresses = state.user.addresses.filter(
-                 (address) => address._id !== addressIdToRemove // Assuming AddressModel has _id
-             );
-        }
-      })
+            state.user.addresses = state.user.addresses.filter(
+              (address) => address._id !== addressIdToRemove, // Assuming AddressModel has _id
+            );
+          }
+        },
+      )
       .addCase(UserService.removeAnAddress.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
