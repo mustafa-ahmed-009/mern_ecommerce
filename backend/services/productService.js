@@ -16,44 +16,6 @@ exports.uploadProductImages = uploadMixOfImages([
     },
   ]);
   
-  exports.resizeProductImages = asyncHandler(async (req, res, next) => {
-    try {
-      // Process imageCover if it exists
-      if (req.files.imageCover) {
-        const imageCoverFileName = `product-${uuidv4()}-${Date.now()}-cover.jpeg`;
-        await sharp(req.files.imageCover[0].buffer)
-          .resize(2000, 1333)
-          .toFormat('jpeg')
-          .jpeg({ quality: 95 })
-          .toFile(`uploads/products/${imageCoverFileName}`);
-        req.body.imageCover = imageCoverFileName;
-      }
-  
-      // Process images if they exist
-      if (req.files.images) {
-        req.body.images = [];
-        await Promise.all(
-          req.files.images.map(async (img, index) => {
-            const imageName = `product-${uuidv4()}-${Date.now()}-${index + 1}.jpeg`;
-            await sharp(img.buffer)
-              .resize(2000, 1333)
-              .toFormat('jpeg')
-              .jpeg({ quality: 95 })
-              .toFile(`uploads/products/${imageName}`);
-            req.body.images.push(imageName);
-          })
-        );
-      }
-  
-      // Only call next() once after all processing is done
-      next();
-      
-    } catch (error) {
-      next(error);
-    }
-  });
-  
-// @desc    Get list of products
 // @route   GET /api/v1/products
 // @access  Public
 exports.getProducts = factory.getAll(Product, 'Products');

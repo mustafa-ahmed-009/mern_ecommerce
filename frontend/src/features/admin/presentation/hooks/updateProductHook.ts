@@ -33,6 +33,8 @@ const useUpdateProductHook = (product: Product, productsList:Category[]) => {
   const navigate = useNavigate(); 
 
   const categoriesList = useSelector((state: RootState) => state.categories.categoriesList); 
+  const productState = useSelector((state: RootState) => state.products); 
+  let isLoading = productState.loading; 
   const handleCoverImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
@@ -117,6 +119,7 @@ const useUpdateProductHook = (product: Product, productsList:Category[]) => {
       })).unwrap();
   
       toast.success("product has been successfully updated ");
+      navigate("/admin/products")
     } catch (error: any) {
       toast.error(error.message || "there was an error during update");
       console.error("Update error:", error);
@@ -160,7 +163,8 @@ setPriceAfterDiscount,
     setReplacingImageIndex,
     removeCoverImage,
     handleUpdate, 
-    handelDelete
+    handelDelete, 
+    isLoading
   };
 }
 export default useUpdateProductHook;
