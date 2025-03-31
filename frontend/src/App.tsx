@@ -19,13 +19,20 @@ import { ProfilePage } from "./features/profile/presentation/ProfilePage";
 import { AppDispatch } from "./redux/store";
 import AdminProtectedRoutes from "./utils/components/AdminProtectedRoutes";
 import UserProtectedRoutes from "./utils/components/UserProtectedRoutes";
+import { ProductsService } from "./features/admin/data/services/ProductService";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(UserService.checkAuth()).then(() =>
-      dispatch(CartService.getUserCartItems()),
+try {
+      dispatch(UserService.checkAuth()).then(() =>
+        dispatch(CartService.getUserCartItems()).then(
+        ()=>dispatch(ProductsService.fetchAllProducts({}))
+      ),
     );
+} catch (error) {
+  
+}
   }, [dispatch]);
   return (
     <>

@@ -23,7 +23,7 @@ const HomeViewCategories = () => {
   }
   return (
     <div className="min-h-[20vh] my-1 p-2">
-      <h1 className="text-center m-1 ">Categories</h1>
+      <h1 className="text-center m-1 text-3xl my-2 font-bold ">Categories</h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {categoriesList.map((category) => (
           <div
