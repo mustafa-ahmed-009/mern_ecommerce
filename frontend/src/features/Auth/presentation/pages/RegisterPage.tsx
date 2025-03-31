@@ -5,7 +5,6 @@ import { AppDispatch } from "../../../../redux/store"; // Ensure path is correct
 import { AuthService } from "../../data/AuthService"; // Ensure path is correct
 import toast from "react-hot-toast";
 import { UserService } from "../../../data/UserService"; // Ensure path is correct
-import { CartService } from "../../../cart/data/CartService";
 
 const RegisterPage = () => {
   const dispatch = useDispatch<AppDispatch>();

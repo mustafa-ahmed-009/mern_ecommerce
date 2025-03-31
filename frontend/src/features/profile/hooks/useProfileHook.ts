@@ -7,7 +7,6 @@ import { Product } from "../../admin/data/models/ProductModel";
 import { AuthService } from "../../Auth/data/AuthService";
 import { UserService } from "../../data/UserService";
 import { AddressFormValues } from "./../../data/AdressModel";
-import { CartService } from "../../cart/data/CartService";
 import { clearCart } from "../../cart/data/CartSlice";
 
 // Validation function for address inputs
