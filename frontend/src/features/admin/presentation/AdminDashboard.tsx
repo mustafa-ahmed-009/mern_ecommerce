@@ -1,5 +1,5 @@
 // features/admin/presentation/AdminDashboard.tsx
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom"; // Import Navigate
 import AdminSidebar from "./components/AdminSideBar";
 import AddingProudctsPage from "./pages/AddingProudctsPage";
 import AdminProductDetails from "./pages/AdminProductDetails";
@@ -9,26 +9,27 @@ import ProductManagementPage from "./pages/ProductManagementPage";
 
 const AdminDashboard = () => {
   return (
-    // Removed bg-gray-50 dark:bg-gray-900 - will inherit white bg
-    // Added bg-white explicitly if needed
     <div className="relative min-h-screen bg-white">
-      <AdminSidebar /> {/* Sidebar is fixed, outside the normal flow */}
+      <AdminSidebar />
       {/* Main Content Area */}
       <div className="ml-64 p-6">
-        {" "}
-        {/* Adjust padding as needed */}
         <Routes>
-          {/* Routes remain the same */}
+          {/* Index Route: Redirects from /admin to /admin/products */}
+          <Route index element={<Navigate to="products" replace />} />
+
+          {/* Child Routes */}
+          {/* Removed redundant 'index' prop from products route */}
           <Route path="products" element={<ProductManagementPage />} />
           <Route
             path="products/adminproductdetails/:id"
             element={<AdminProductDetails />}
           />
           <Route path="orders" element={<OrdersManagement />} />
-          {/* <Route path="add-brand" element={<AddingBarnds />} /> */}
           <Route path="add-category" element={<AddingCategory />} />
           <Route path="add-product" element={<AddingProudctsPage />} />
-          {/* <Route index element={<YourAdminHomePage />} /> */}
+
+          {/* Optional: Add a catch-all or not-found route within admin if desired */}
+          {/* <Route path="*" element={<div>Admin Section Not Found</div>} /> */}
         </Routes>
       </div>
     </div>
