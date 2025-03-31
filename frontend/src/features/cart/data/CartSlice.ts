@@ -17,7 +17,13 @@ const initialState: CartState = {
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {},
+  reducers: {
+    clearCart: (state) => {
+      state.cart = null; // Reset cart to initial null state
+      state.error = null; // Optional: also clear any errors
+      state.loading = false; // Optional: ensure loading is false
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Check Auth cases
@@ -102,3 +108,4 @@ export const cartSlice = createSlice({
 });
 
 export const cartReducer = cartSlice.reducer;
+export const { clearCart } = cartSlice.actions;

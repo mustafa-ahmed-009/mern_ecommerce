@@ -7,6 +7,8 @@ import { Product } from "../../admin/data/models/ProductModel";
 import { AuthService } from "../../Auth/data/AuthService";
 import { UserService } from "../../data/UserService";
 import { AddressFormValues } from "./../../data/AdressModel";
+import { CartService } from "../../cart/data/CartService";
+import { clearCart } from "../../cart/data/CartSlice";
 
 // Validation function for address inputs
 const validateAddress = (
@@ -80,6 +82,8 @@ export const useProfile = () => {
     try {
       await dispatch(AuthService.logout());
       await dispatch(UserService.checkAuth());
+      await dispatch(CartService.getUserCartItems());
+       dispatch(clearCart());
       toast.success("Logged out successfully");
       navigate("/login");
     } catch (error) {
