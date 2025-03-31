@@ -82,8 +82,7 @@ export const useProfile = () => {
       await dispatch(AuthService.logout());
        dispatch(clearCart());
       toast.success("Logged out successfully");
-      navigate("/login");
-      await dispatch(UserService.checkAuth());
+      navigate("/");
      // await dispatch(CartService.getUserCartItems());
     } catch (error) {
       toast.error("Error logging out");
