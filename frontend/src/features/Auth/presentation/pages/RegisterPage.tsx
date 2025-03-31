@@ -71,7 +71,6 @@ const RegisterPage = () => {
       ).unwrap();
       // Check auth might be needed depending on whether register logs the user in
       await dispatch(UserService.checkAuth()).unwrap();
-      await dispatch(CartService.getUserCartItems()).unwrap();
       // Use English success message
       toast.success("Registration successful! Please log in."); // Adjusted message
       navigate("/"); 

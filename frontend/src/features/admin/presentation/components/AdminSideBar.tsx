@@ -6,8 +6,8 @@ const AdminSidebar = () => {
     { path: "/admin/products", label: "Manage Products" },
     { path: "/admin/orders", label: "Manage Orders" },
     // { path: "/admin/add-brand", label: "Add Brand" },
-    { path: "/admin/add-category", label: "Add Category" },
-    { path: "/admin/add-product", label: "Add Product" },
+    { path: "/admin/add-category", label: "Manage categories" },
+    { path: "/admin/add-product", label: "Manage Prodcuts" },
     // { path: "/admin", label: "Dashboard", end: true },
   ];
 

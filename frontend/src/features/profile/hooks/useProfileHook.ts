@@ -81,11 +81,11 @@ export const useProfile = () => {
   const handleLogout = async () => {
     try {
       await dispatch(AuthService.logout());
-      await dispatch(UserService.checkAuth());
-      await dispatch(CartService.getUserCartItems());
        dispatch(clearCart());
       toast.success("Logged out successfully");
       navigate("/login");
+      await dispatch(UserService.checkAuth());
+     // await dispatch(CartService.getUserCartItems());
     } catch (error) {
       toast.error("Error logging out");
     }

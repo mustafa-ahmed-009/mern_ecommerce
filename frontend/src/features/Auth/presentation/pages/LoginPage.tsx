@@ -46,7 +46,6 @@ const LoginPage = () => {
       // Using unwrap() allows catching specific errors from rejected thunks directly
       await dispatch(AuthService.login(formData)).unwrap();
       await dispatch(UserService.checkAuth()).unwrap();
-      await dispatch(CartService.getUserCartItems()).unwrap();
       toast.success("Logged in successfully");
       navigate("/");
       // Redirect to home page after successful login

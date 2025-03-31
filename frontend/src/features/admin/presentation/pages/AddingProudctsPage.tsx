@@ -47,7 +47,7 @@ const AddingProductsPage = () => {
         <p className="text-gray-600 mb-2 font-medium">
           Cover Image (Main Image)
         </p>
-        <div className="flex justify-start">
+        <div className="flex justify-center">
           {" "}
           {/* Changed justify-center to justify-start */}
           {!coverImagePreview ? (
