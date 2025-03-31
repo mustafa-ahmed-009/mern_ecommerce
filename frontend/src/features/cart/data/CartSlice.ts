@@ -33,11 +33,8 @@ export const cartSlice = createSlice({
       })
       .addCase(CartService.addAnItemToTheCart.fulfilled, (state, action) => {
         state.loading = false;
-        if (state.cart?.cartItems === null) {
-          state.cart.cartItems = []; 
-          state.cart?.cartItems.push(action.payload.data.cartItems); 
-        }
-        state.cart!.cartItems = action.payload.data.cartItems;
+        state.cart = action.payload.data;
+        state.error = null;
       })
       .addCase(CartService.addAnItemToTheCart.rejected, (state, action) => {
         state.loading = false;
