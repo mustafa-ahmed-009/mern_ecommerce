@@ -215,7 +215,7 @@ const NavBar = () => {
       {/* Mobile Menu (JSX remains the same) */}
       {menuOpen && (
         <div
-          className="absolute top-full left-0 w-full bg-black bg-opacity-90 text-white flex flex-col items-center py-4 space-y-6 md:hidden transition-transform duration-300 ease-in-out"
+          className="absolute top-full left-0 w-full bg-primary bg-opacity-90 text-white flex flex-col items-center py-4 space-y-6 md:hidden transition-transform duration-300 ease-in-out"
           onClick={() => setMenuOpen(false)}
         >
           {/* ... mobile links ... */}
