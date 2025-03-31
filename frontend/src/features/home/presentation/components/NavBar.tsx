@@ -102,7 +102,7 @@ const NavBar = () => {
       <img
         src={logo}
         alt="Logo"
-        className="h-[60%] w-auto object-contain cursor-pointer"
+        className="h-[80%] w-auto object-contain cursor-pointer"
         onClick={() => navigate("/")}
       />
 
