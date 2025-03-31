@@ -74,7 +74,7 @@ const RegisterPage = () => {
       await dispatch(CartService.getUserCartItems()).unwrap();
       // Use English success message
       toast.success("Registration successful! Please log in."); // Adjusted message
-      navigate("/login"); // Redirect to login page after successful registration
+      navigate("/"); 
     } catch (error: any) {
       // Use English error message
       const errorMessage =
