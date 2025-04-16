@@ -13,25 +13,22 @@ const AdminSidebar = ({ isOpen, toggleSidebar }: AdminSidebarProps) => {
     { path: "/admin/add-category", label: "Manage Categories" },
     { path: "/admin/add-product", label: "Manage Products" },
   ];
-
-  // If sidebar is closed and on mobile, we don't render the content
-  // This prevents sidebar items from being accessible when hidden on mobile
   
   return (
     <>
       {/* Overlay for mobile - only appears when sidebar is open on mobile */}
       {isOpen && (
         <div 
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
           onClick={toggleSidebar}
         />
       )}
 
-      {/* Sidebar - transforms off-screen when closed on mobile */}
+      {/* Sidebar - fixed position with higher z-index */}
       <div
-        className={`fixed top-0 left-0 h-screen bg-white shadow-lg p-6 pt-16 md:pt-6 z-10 transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-screen bg-white shadow-lg p-6 pt-16 md:pt-6 z-40 transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-        } ${isOpen ? "w-64" : "md:w-64"}`}
+        } ${isOpen ? "w-64" : "md:w-64"} overflow-y-auto`}
       >
         <h2 className="text-lg font-semibold mb-6 text-gray-900">Admin Menu</h2>
         <ul className="space-y-2">

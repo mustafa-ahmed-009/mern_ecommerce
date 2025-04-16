@@ -3,12 +3,15 @@ import HomeViewCategories from "./components/HomeViewCategories";
 import HeroSlider from "./components/HeroSlider";
 import FeaturedProducts from "./components/FeaturedProducts";
 import WelcomeSection from "./components/WelcomeSection";
+import NavBar from "./components/NavBar";
 
 const HomeView = () => {
   return (
     // Note: NavBar is usually part of a main layout, not directly in HomeView
     // <NavBar />
-    <div className="w-full max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 py-4">
+<div>
+  <NavBar/>
+<div className="w-full max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 py-4">
       {" "}
       {/* Use max-width and center */}
       {/* Hero Slider Section */}
@@ -32,6 +35,7 @@ const HomeView = () => {
             <BrandsSlider />
          </section> */}
     </div>
+</div>
   );
 };
 

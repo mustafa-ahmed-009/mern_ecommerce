@@ -40,9 +40,9 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Mobile menu toggle button */}
+      {/* Mobile menu toggle button - increased z-index */}
       <button
-        className="md:hidden fixed top-4 left-4 z-20 bg-primary text-white p-2 rounded-lg"
+        className="md:hidden fixed top-4 left-4 z-50 bg-primary text-white p-2 rounded-lg"
         onClick={toggleSidebar}
         aria-label="Toggle menu"
       >
