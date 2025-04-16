@@ -78,7 +78,7 @@ try {
                 Enter the 6-digit code you received
               </p>
             </div>
-
+<p className='text-red-600'>!!! Please check your spam folder if you cannot find it in the main mail box </p>
             <button
               onClick={handleVerification}
               className="w-full flex items-center justify-center py-3 px-4 bg-primary hover:bg-indigo-700 text-white font-medium rounded-lg transition duration-200"
