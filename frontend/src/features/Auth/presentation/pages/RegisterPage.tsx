@@ -68,11 +68,14 @@ const RegisterPage = () => {
       await dispatch(
         AuthService.register({ name, email, password, passwordConfirm }),
       ).unwrap();
-      // Check auth might be needed depending on whether register logs the user in
-      await dispatch(UserService.checkAuth()).unwrap();
+     // await dispatch(UserService.checkAuth()).unwrap();
       // Use English success message
-      toast.success("Registration successful! Please log in."); // Adjusted message
-      navigate("/"); 
+     // toast.success("Registration successful! Please log in."); // Adjusted message
+      navigate("/verifyRegistrationCode",{
+        state:{
+          email:email
+        }
+      }); 
     } catch (error: any) {
       // Use English error message
       const errorMessage =

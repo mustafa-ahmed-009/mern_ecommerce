@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Read the base URL from Vite's environment variables
 // It will automatically use the correct value based on dev vs. build mode
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const apiBaseUrl = "http://localhost:3000/api/v1/" ;
 
 // Optional: Add a check or fallback if needed, though Vite usually handles this
 if (!apiBaseUrl) {

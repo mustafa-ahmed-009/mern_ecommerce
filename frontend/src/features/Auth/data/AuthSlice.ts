@@ -5,12 +5,15 @@ interface AuthState {
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
+  
+newUserVerified: boolean 
 }
 
 const initialState: AuthState = {
   error: null,
   loading: false,
   isAuthenticated: false,
+  newUserVerified:false , 
 };
 
 export const authSlice = createSlice({
@@ -78,6 +81,18 @@ export const authSlice = createSlice({
         state.isAuthenticated = false;
       })
       .addCase(AuthService.logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(AuthService.verifyRegistrationCode.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(AuthService.verifyRegistrationCode.fulfilled, (state) => {
+        state.loading = false;
+state.newUserVerified = true ; 
+      })
+      .addCase(AuthService.verifyRegistrationCode.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

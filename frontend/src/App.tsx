@@ -20,6 +20,7 @@ import { AppDispatch } from "./redux/store";
 import AdminProtectedRoutes from "./utils/components/AdminProtectedRoutes";
 import UserProtectedRoutes from "./utils/components/UserProtectedRoutes";
 import { ProductsService } from "./features/admin/data/services/ProductService";
+import VerifyRegistrationCode from "./features/Auth/presentation/pages/VerifyRegistartionCode";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -49,6 +50,7 @@ try {
           <Route path="/products/:id" element={<ProductsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/verifyRegistrationCode" element={<VerifyRegistrationCode />} />
           <Route path="/cart" element={<Cart />} />
           <Route element={<UserProtectedRoutes />}>
             <Route path="/profile" element={<ProfilePage />} />

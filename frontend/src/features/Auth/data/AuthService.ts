@@ -76,4 +76,19 @@ export const AuthService = {
       return rejectWithValue(error.message);
     }
   }),
+  verifyRegistrationCode: createAsyncThunk("auth/verifyRegistrationCode", async (verificationCode:string, { rejectWithValue }) => {
+    try {
+     await axiosInstance.post("auth/verifyRegistrationCode",{
+        verificationCode
+      });
+
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(
+          error.response.data.message || error.response.data,
+        );
+      }
+      return rejectWithValue(error.message);
+    }
+  }),
 };
