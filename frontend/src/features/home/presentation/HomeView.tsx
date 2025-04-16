@@ -3,7 +3,6 @@ import HomeViewCategories from "./components/HomeViewCategories";
 import HeroSlider from "./components/HeroSlider";
 import FeaturedProducts from "./components/FeaturedProducts";
 import WelcomeSection from "./components/WelcomeSection";
-import NavBar from "./components/NavBar";
 
 const HomeView = () => {
   return (

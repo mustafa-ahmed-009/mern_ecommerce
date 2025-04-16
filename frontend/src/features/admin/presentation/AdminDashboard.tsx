@@ -10,13 +10,10 @@ import ProductManagementPage from "./pages/ProductManagementPage";
 
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
 
   // Check if screen is mobile size on mount and when window resizes
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-      // Auto-close sidebar on mobile
       if (window.innerWidth < 768) {
         setSidebarOpen(false);
       } else {
