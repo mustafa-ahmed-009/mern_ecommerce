@@ -1,42 +1,65 @@
 // features/admin/presentation/components/AdminSidebar.tsx
 import { NavLink } from "react-router-dom";
 
-const AdminSidebar = () => {
+type AdminSidebarProps = {
+  isOpen: boolean;
+  toggleSidebar: () => void;
+};
+
+const AdminSidebar = ({ isOpen, toggleSidebar }: AdminSidebarProps) => {
   const menuItems = [
     { path: "/admin/products", label: "Manage Products" },
     { path: "/admin/orders", label: "Manage Orders" },
-    // { path: "/admin/add-brand", label: "Add Brand" },
-    { path: "/admin/add-category", label: "Manage categories" },
-    { path: "/admin/add-product", label: "Manage Prodcuts" },
-    // { path: "/admin", label: "Dashboard", end: true },
+    { path: "/admin/add-category", label: "Manage Categories" },
+    { path: "/admin/add-product", label: "Manage Products" },
   ];
 
+  // If sidebar is closed and on mobile, we don't render the content
+  // This prevents sidebar items from being accessible when hidden on mobile
+  
   return (
-    // Sidebar background remains white
-    <div className="w-64 h-screen fixed left-0 top-0 bg-white shadow-lg p-6 pt-16 md:pt-6 z-10">
-      {/* Title text color (using default black/dark gray from root styles or add text-gray-900) */}
-      <h2 className="text-lg font-semibold mb-6 text-gray-900">Admin Menu</h2>
-      <ul className="space-y-2">
-        {menuItems.map((item) => (
-          <li key={item.path}>
-            <NavLink
-              to={item.path}
-              // end={item.end}
-              className={({ isActive }) =>
-                `block px-4 py-2 rounded-lg transition-colors duration-150 ease-in-out ${
-                  isActive
-                    ? "bg-primary text-white" // Active: Primary background, white text
-                    : "text-gray-900 hover:bg-gray-100" // Default: Dark text, light gray hover bg
-                  // Removed dark mode classes as main bg is white
-                }`
-              }
-            >
-              {item.label}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      {/* Overlay for mobile - only appears when sidebar is open on mobile */}
+      {isOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
+          onClick={toggleSidebar}
+        />
+      )}
+
+      {/* Sidebar - transforms off-screen when closed on mobile */}
+      <div
+        className={`fixed top-0 left-0 h-screen bg-white shadow-lg p-6 pt-16 md:pt-6 z-10 transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        } ${isOpen ? "w-64" : "md:w-64"}`}
+      >
+        <h2 className="text-lg font-semibold mb-6 text-gray-900">Admin Menu</h2>
+        <ul className="space-y-2">
+          {menuItems.map((item) => (
+            <li key={item.path}>
+              <NavLink
+                to={item.path}
+                onClick={() => {
+                  // Close sidebar after navigation on mobile
+                  if (window.innerWidth < 768) {
+                    toggleSidebar();
+                  }
+                }}
+                className={({ isActive }) =>
+                  `block px-4 py-2 rounded-lg transition-colors duration-150 ease-in-out ${
+                    isActive
+                      ? "bg-primary text-white"
+                      : "text-gray-900 hover:bg-gray-100"
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
 
