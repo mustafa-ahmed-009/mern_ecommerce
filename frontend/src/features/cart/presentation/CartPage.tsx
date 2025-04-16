@@ -42,20 +42,6 @@ const Cart: React.FC = () => {
     dispatch(CartService.removeCartItem(itemId));
   };
 
-  // --- Promo Code (Currently Commented Out) ---
-  // const [promoCode, setPromoCode] = useState(""); // Uncomment if using promo codes
-  // const handleApplyPromoCode = () => {
-  //  try {
-  //    // Ensure promoCode state is managed if uncommenting
-  //    // dispatch(CartService.applyCoupon(promoCode)).unwrap();
-  //    // toast.success("Coupon applied!"); // Add success feedback
-  //  } catch (error:any) {
-  //    // Extract error message more reliably if possible
-  //    // const message = error?.message || "Failed to apply coupon";
-  //    // toast.error(message);
-  //  }
-  // };
-
   const handleCheckout = () => {
     // Ensure cart data is available before navigating
     if (cart.cart?.totalCartPrice !== undefined) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaLock, FaEnvelope, FaCheck } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, AppStore, RootState } from '../../../../redux/store';
+import { AppDispatch, RootState } from '../../../../redux/store';
 import { AuthService } from '../../data/AuthService';
 import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
