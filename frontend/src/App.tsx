@@ -39,6 +39,7 @@ try {
     <>
       <BrowserRouter>
         {" "}
+        <NavBar />
         <Routes>
           <Route element={<AdminProtectedRoutes />}>
             <Route path="/admin/*" element={<AdminDashboard />} />

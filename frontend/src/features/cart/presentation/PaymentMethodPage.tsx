@@ -66,13 +66,16 @@ const CheckOutPage = () => {
       },
       cartItems: cartState?.cartItems || [], // Provide fallback
     };
-    console.log(orderModel);
 
     try {
-      dispatch(OrdersService.addOrder(orderModel)).unwrap();
-      toast.success("order has been succeffuly placed");
-      dispatch(CartService.deleteTheWholeCart()).unwrap();
-      naviagte("/orders");
+if(userState?.newUserVerified){
+  dispatch(OrdersService.addOrder(orderModel)).unwrap();
+  toast.success("order has been succeffuly placed");
+  dispatch(CartService.deleteTheWholeCart()).unwrap();
+  naviagte("/orders");
+}else{
+  toast.error("you need to verify your email before making an order")
+}
     } catch (error: any) {
       toast.error(error);
     }

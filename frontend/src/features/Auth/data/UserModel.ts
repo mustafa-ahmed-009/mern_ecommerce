@@ -12,4 +12,5 @@ export interface UserModel {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  newUserVerified: string;
 }
